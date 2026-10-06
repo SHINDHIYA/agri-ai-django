@@ -13,3 +13,4 @@ venv/
 .cache.sqlite
 *.mp3
 staticfiles/
+users/YIELD.pkl
