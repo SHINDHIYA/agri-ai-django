@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Yield Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+    body {
+        background-image: url('/static/images/d1.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .navbar {
+        background-color: rgba(34, 139, 34, 0.8); /* dark green */
+    }
+    .navbar a {
+        color: #E8F5E9 !important; /* light greenish white */
+    }
+    .container {
+        margin-top: 100px;
+    }
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 100, 0, 0.3); /* darker green shadow */
+    }
+    .card-header {
+        background-color: #2e7d32; /* forest green */
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .card-body {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .prediction-text {
+        font-size: 1.2em;
+        margin-top: 20px;
+        font-weight: bold;
+        text-align: center;
+        color: #1b5e20; /* deep green text */
+    }
+    .plot-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .plot-image {
+        max-width: 100%;
+        height: auto;
+    }
+    .card-footer {
+        background-color: #e8f5e9; /* light green */
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .btn-primary {
+        background-color: #43a047; /* medium green */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #2e7d32; /* darken on hover */
+    }
+</style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Crop Yield Prediction</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-header text-center">
+                <h2>Crop Yield Prediction</h2>
+            </div>
+            <div class="card-body">
+                <p class="prediction-text">
+                    {{ prediction_text1 }}
+                </p>
+                <div class="plot-container">
+                    <img src="data:image/png;base64,{{ plot_base64 }}" alt="Crop Yield Prediction Plot" class="plot-image">
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button class="btn btn-primary" onclick="goBack()">Go Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
+

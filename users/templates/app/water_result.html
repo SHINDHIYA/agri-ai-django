@@ -1,0 +1,300 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Water Quality Result</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d4fc79, #96e6a1);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .about-section {
+      padding: 60px 0;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .container {
+      width: 90%;
+      margin: auto;
+      max-width: 1200px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .content-column {
+      flex: 1;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .content-column:hover {
+      transform: translateY(-5px);
+    }
+
+    .sec-title .title {
+      display: inline-block;
+      background: #00c6ff;
+      color: #fff;
+      padding: 6px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .sec-title h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 10px 0 20px;
+      color: #222;
+      position: relative;
+    }
+
+    .sec-title h2::after {
+      content: "";
+      width: 60px;
+      height: 4px;
+      background: #00c6ff;
+      display: block;
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+
+    .text ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .text ul li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+      position: relative;
+    }
+
+    .text ul li::before {
+      content: "✔";
+      color: #00c6ff;
+      font-weight: bold;
+      position: absolute;
+      left: -20px;
+    }
+
+    .doctor-info {
+      margin-top: 20px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 5px solid #00c6ff;
+    }
+
+    .doctor-info h3 {
+      margin-bottom: 12px;
+      font-weight: 600;
+      color: #00c6ff;
+    }
+
+    .doctor-info p {
+      margin-top: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .image-column {
+      flex: 1;
+      text-align: center;
+    }
+
+    .image-column img {
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .image-column img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+
+    .author-desc h2 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .row {
+        flex-direction: column;
+      }
+      .content-column, .image-column {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+   <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+<br><br>
+
+{% if prediction_text1 == 'NOTSAFE' %}
+<section class="about-section">
+  <div class="container">
+    <div class="row">
+
+      <div class="content-column">
+        <div class="inner-column">
+          <div class="sec-title">
+            <div class="author-desc">
+              <h2>🚫 NOT SAFE DRINKING WATER</h2>
+            </div>
+            <span class="title">ALERT</span>
+            <h2>Prevention</h2>
+          </div>
+          <div class="text">
+            Clean and safe water is crucial for health. Prevention involves:
+            <ul>
+              <li>Boiling water before drinking</li>
+              <li>Using water filters or purifiers</li>
+              <li>Avoiding untreated water sources</li>
+            </ul>
+          </div>
+
+          <h2>Precautions</h2>
+          <div class="text">
+            <ul>
+              <li>Always wash hands with clean water and soap</li>
+              <li>Avoid swimming in untreated lakes or rivers</li>
+              <li>Store drinking water in clean, covered containers</li>
+            </ul>
+          </div>
+
+          <h2>Causes</h2>
+          <div class="text">
+            Unsafe water can be contaminated by:
+            <ul>
+              <li>Sewage or industrial waste</li>
+              <li>Agricultural runoff with pesticides</li>
+              <li>Bacterial or viral infections</li>
+            </ul>
+          </div>
+
+          <h2>Effects</h2>
+          <div class="text">
+            Drinking unsafe water can lead to:
+            <ul>
+              <li>Gastrointestinal infections (e.g., diarrhea)</li>
+              <li>Waterborne diseases (e.g., cholera, typhoid)</li>
+              <li>Long-term health issues (e.g., kidney damage)</li>
+            </ul>
+          </div>
+
+          <h2>Other Information</h2>
+          <div class="text">
+            <ul>
+              <li>Ensure proper sanitation and waste disposal</li>
+              <li>Support community efforts for clean water access</li>
+              <li>Stay informed about local water quality reports</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="image-column">
+        <figure>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwNwF-az7F0nT3qT0m6-AEp8O7QbaOi6ZO2A&s" alt="Not Safe Water">
+        </figure>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% elif prediction_text1 == 'SAFE' %}
+<section class="about-section">
+  <div class="container">
+    <div class="row">
+
+      <div class="content-column">
+        <div class="inner-column">
+          <div class="sec-title">
+            <span class="title">✅ SAFE WATER</span>
+            <h2>Information</h2>
+          </div>
+          <div class="text">
+            Safe drinking water is essential for health and wellbeing. Continuous monitoring,
+            good sanitation, and proper storage practices ensure its safety.
+          </div>
+
+          <div class="doctor-info">
+            <h3>💧 Drinking Safe Water</h3>
+            <ul>
+              <li>Always ensure your drinking water comes from a clean and reliable source</li>
+              <li>Use filters or purifiers if necessary to remove contaminants</li>
+              <li>Avoid plastic bottles where possible; opt for reusable and eco-friendly alternatives</li>
+              <li>Monitor water quality regularly, especially in areas prone to contamination</li>
+            </ul>
+            <p>
+              For more detailed guidance on maintaining safe water consumption habits,
+              consult with a healthcare professional.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="image-column">
+        <div class="author-desc">
+          <h2>💧 SAFE WATER</h2>
+        </div>
+        <figure>
+          <img src="https://images.pexels.com/photos/279947/pexels-photo-279947.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Safe Water">
+        </figure>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}
+
+</body>
+</html>
+{% endblock content %}

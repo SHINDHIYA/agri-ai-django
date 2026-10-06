@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Display</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: rgb(245, 245, 245);
+      background-image: url("https://static1.backyardbossimages.com/wordpress/wp-content/uploads/2022/04/soil-drainage-feature.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    /* Header */
+    header {
+      background-color: #045c01;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      width: 92%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 4vw;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: gray;
+    }
+
+    /* Frame for Crop Display */
+    .frame {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      margin: 30px auto;
+      border-radius: 15px;
+
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      max-width: 1000px;
+      width: 90%;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .frame:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .img {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      border: 3px solid #e0e0e0;
+    }
+
+    /* Crop Plan */
+    .plan {
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      padding: 25px;
+      border-radius: 12px;
+      text-align: left;
+      width: 100%;
+    }
+
+    .plan h2 {
+      color: #045c01;
+      font-size: 28px;
+      margin-bottom: 15px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .features li {
+      background: #e8f5e9;
+      margin: 10px 0;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 17px;
+      line-height: 1.5;
+      transition: background-color 0.3s;
+    }
+
+    .features li:hover {
+      background: #d0f0d4;
+    }
+
+    .features li strong {
+      color: #2e7d32;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .frame {
+        max-width: 95%;
+      }
+    }
+  </style>
+</head>
+<div>
+      <a href="/" 
+         class="px-5 py-2 rounded-lg text-white font-semibold shadow-lg" 
+         style="background-color: #045c01; transition: 0.3s;">
+        Home
+      </a>
+    </div>
+</style>
+ <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+  
+{% if prediction_text == '10:10:10 NPK' %}
+<div class="frame">
+  <img class="img" src="https://www.ecolo.store/cdn/shop/files/liquidfert-allveggies-3x4-01.jpg?v=1717414112">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>10:10:10 NPK</p>
+    <ul class="features">
+      <li>🌱 **10:10:10 NPK Fertilizer** - Balanced nutrient composition for plant growth.</li>
+      <li>**Nutrient Breakdown**: 
+        <ul>
+          <li>🔹 **Nitrogen (10%)**: Supports leaf and stem growth.</li>
+          <li>🔹 **Phosphorus (10%)**: Boosts root development and flowering.</li>
+          <li>🔹 **Potassium (10%)**: Enhances overall plant health and disease resistance.</li>
+        </ul>
+      </li>
+      <li>**Recommended Application**: Apply **1-2 tablespoons per plant** every 4-6 weeks.</li>
+      <li>**Soil Preparation**: Mix evenly into the topsoil or dilute with water for better absorption.</li>
+      <li>**Water Management**: Water the soil well after applying to aid nutrient absorption.</li>
+      <li>**Symptoms of Imbalance**: Overuse may lead to nutrient toxicity, stunted growth, or leaf discoloration.</li>
+      <li>**Healthcare**: Regularly test soil nutrient levels to maintain a balanced feeding schedule.</li>
+    </ul>
+  </div>
+</div>
+
+
+{% elif prediction_text == '10:26:26 NPK' %}
+<div class="frame">
+  <img class="img" src="https://www.gsfclimited.com/content/images/NPK-new.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>10:26:26 NPK</p>
+    <ul class="features">
+      <li>🌱 **NPK Ratio** - <strong>10:26:26</strong> (10% Nitrogen, 26% Phosphorus, 26% Potassium)</li>
+      <li>**Purpose**: Ideal for early crop growth, root development, and overall plant vigor.</li>
+      <li>**Nitrogen (10%)**: Supports leafy growth and photosynthesis.</li>
+      <li>**Phosphorus (26%)**: Enhances root strength, flowering, and seed formation.</li>
+      <li>**Potassium (26%)**: Improves disease resistance, fruit quality, and water regulation.</li>
+      <li>**Application**: Best applied during early vegetative growth and flowering stages.</li>
+      <li>**Recommended Usage**: Mix with soil at the rate of 2-3 grams per liter of water for foliar spray or 50-100 kg per hectare for field crops.</li>
+      <li>**Symptoms of Imbalance**: Overuse may lead to salt buildup, affecting nutrient absorption.</li>
+      <li>**Healthcare**: Use in balanced proportions with organic matter to maintain soil health.</li>
+    </ul>
+  </div>
+</div>
+{% elif prediction_text == 'NPK 12:32:16' %}
+<div class="frame">
+  <img class="img" src="https://5.imimg.com/data5/ANDROID/Default/2024/11/467241832/AG/YK/QO/146713632/product-jpeg.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Nitrogen-Phosphorus-Potassium (12:32:16)</p>
+    <ul class="features">
+      <li>🌱 **NPK 12:32:16** - <strong>Balanced fertilizer</strong> for better crop yield.</li>
+      <li>**Nitrogen (12%)**: Supports leaf growth, chlorophyll production, and overall plant health.</li>
+      <li>**Phosphorus (32%)**: Promotes strong root development, flowering, and fruit formation.</li>
+      <li>**Potassium (16%)**: Enhances disease resistance, improves water retention, and strengthens stems.</li>
+      <li>**Recommended Application**: Best suited for cereals, pulses, vegetables, and fruit crops.</li>
+      <li>**Usage Guidelines**: Apply during early plant growth stages for strong root formation.</li>
+      <li>**Water Management**: Proper irrigation ensures nutrients dissolve and reach plant roots effectively.</li>
+      <li>**Symptoms of Imbalance**: Excess nitrogen may cause excessive foliage, while phosphorus deficiency leads to weak root systems.</li>
+      <li>**Healthcare**: Use in recommended doses to avoid soil degradation and nutrient imbalance.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+{% elif prediction_text == '13:32:26 NPK' %}
+<div class="frame">
+  <img class="img" src="https://iffco-public-assets.s3.ap-south-1.amazonaws.com/s3fs-public/2019-09/npk-12-32-16.png">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>13:32:26 NPK</p>
+    <ul class="features">
+      <li>🌱 **NPK Ratio** - <strong>13% Nitrogen (N), 32% Phosphorus (P), 26% Potassium (K)</strong></li>
+      <li>**Nitrogen (N) Benefits**: Promotes leaf and stem growth, essential for early plant development.</li>
+      <li>**Phosphorus (P) Benefits**: Enhances root development, flowering, and fruiting.</li>
+      <li>**Potassium (K) Benefits**: Improves disease resistance, enhances fruit quality, and supports water regulation.</li>
+      <li>**Recommended Usage**: Ideal for crops needing high phosphorus for root and flower development.</li>
+      <li>**Fertilizer Application**: Apply in split doses during the vegetative and flowering stages.</li>
+      <li>**Water Management**: Ensure adequate irrigation to dissolve and absorb nutrients effectively.</li>
+      <li>**Symptoms of Imbalance**: Overuse may cause salt buildup, leading to nutrient lockout.</li>
+      <li>**Healthcare**: Maintain proper soil pH (6.0-7.0), avoid over-fertilization, and ensure balanced soil nutrition.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == '18:46:00 NPK' %}
+<div class="frame">
+  <img class="img" src="https://5.imimg.com/data5/SELLER/Default/2024/6/429489283/DR/RA/PP/13900571/npk-18-46-00-water-soluble-fertilizer.jpeg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>18:46:00 NPK</p>
+    <ul class="features">
+      <li>🌱 **18:46:00 NPK** - <strong>High Phosphorus Fertilizer</strong> for root and flower development.</li>
+      <li>**NPK Composition**: 18% Nitrogen (N), 46% Phosphorus (P), and 0% Potassium (K).</li>
+      <li>**Benefits**: 
+        <ul>
+          <li>Boosts early plant growth and root development.</li>
+          <li>Enhances flowering and fruiting in crops.</li>
+          <li>Supports energy transfer and photosynthesis.</li>
+        </ul>
+      </li>
+      <li>**Recommended Usage**: Apply 1-2 teaspoons per plant based on soil requirements.</li>
+      <li>**Application**: Mix with soil or dissolve in water for foliar spray.</li>
+      <li>**Water Management**: Ensure adequate watering after application to enhance nutrient absorption.</li>
+      <li>**Symptoms of Imbalance**: Excess phosphorus can block micronutrient uptake, causing deficiencies.</li>
+      <li>**Healthcare**: Avoid overuse, balance with potassium-based fertilizers for optimal growth.</li>
+    </ul>
+  </div>
+</div>
+
+
+{% elif prediction_text == '19:19:19 NPK' %}
+<div class="frame">
+  <img class="img" src="https://agribegri.com/productimage/9fe8297c45c97be54de92db321947346-08-16-23-19-07-56.webp">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>19:19:19 NPK</p>
+    <ul class="features">
+      <li>🌱 **19:19:19 NPK - Balanced Fertilizer** for overall plant growth</li>
+      <li>**NPK Benefits**: Provides equal proportions of Nitrogen (N), Phosphorus (P), and Potassium (K), essential for plant health.</li>
+      <li>**Recommended Application**: Suitable for all growth stages, especially during vegetative and flowering phases.</li>
+      <li>**Fertilizer Mix**: Dissolve 5g per liter of water for foliar spray or use directly in the soil.</li>
+      <li>**Water Management**: Ensure adequate irrigation to aid nutrient absorption and prevent salt accumulation.</li>
+      <li>**Symptoms of Imbalance**: Excessive use may cause nutrient toxicity, leaf burn, or stunted growth.</li>
+      <li>**Healthcare**: Regularly monitor soil pH and nutrient levels to optimize plant growth.</li>
+    </ul>
+  </div>
+</div>
+
+
+
+{% elif prediction_text == '20:20:20 NPK' %}
+<div class="frame">
+  <img class="img" src="https://m.media-amazon.com/images/I/71pHjzWy80L.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>20:20:20 NPK</p>
+    <ul class="features">
+      <li>🌱 **20:20:20 NPK** - <strong>Balanced Fertilizer</strong> for all plant growth stages.</li>
+      <li>**NPK Benefits**: Provides equal proportions of Nitrogen (N), Phosphorus (P), and Potassium (K) for overall plant health.</li>
+      <li>**Recommended Mix**: Dissolve **5g per liter of water** and apply as foliar spray or soil drench.</li>
+      <li>**Fertilizer Function**:  
+        - **Nitrogen (20%)**: Promotes leaf growth and chlorophyll production.  
+        - **Phosphorus (20%)**: Enhances root development and flowering.  
+        - **Potassium (20%)**: Strengthens plants, improves disease resistance, and enhances fruit quality.
+      </li>
+      <li>**Water Management**: Ensure proper irrigation after application to avoid salt buildup.</li>
+      <li>**Symptoms of Imbalance**:  
+        - **Deficiency**: Yellowing leaves, weak stems, poor flowering.  
+        - **Excess**: Leaf burn, stunted root growth, nutrient lockout.
+      </li>
+      <li>**Healthcare**: Apply in the morning or evening to prevent evaporation losses and maximize nutrient absorption.</li>
+    </ul>
+  </div>
+</div>
+
+
+{% elif prediction_text == '50:26:26 NPK' %}
+<div class="frame">
+  <img class="img" src="https://farmfields.net/wp-content/uploads/2017/05/NPK-12-32-16.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>50:26:26 NPK Fertilizer</p>
+    <ul class="features">
+      <li>🌱 **NPK Ratio** - **50% Nitrogen (N), 26% Phosphorus (P), 26% Potassium (K)**</li>
+      <li>**Nitrogen (N) Benefits**: Boosts leafy growth and enhances photosynthesis efficiency.</li>
+      <li>**Phosphorus (P) Benefits**: Promotes root development, flowering, and fruit setting.</li>
+      <li>**Potassium (K) Benefits**: Improves plant resistance, enhances drought tolerance, and strengthens stems.</li>
+      <li>**Recommended Usage**: Best suited for crops requiring high nitrogen intake, such as leafy vegetables, maize, and wheat.</li>
+      <li>**Application Method**: Apply evenly to soil, preferably before watering, to ensure nutrient absorption.</li>
+      <li>**Symptoms of Imbalance**: Excess nitrogen may cause excessive vegetative growth, delaying fruiting; phosphorus deficiency leads to poor root development.</li>
+      <li>**Healthcare**: Maintain balanced application to prevent nutrient toxicity; combine with organic matter for improved soil health.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == 'Ammonium Sulphate' %}
+<div class="frame">
+  <img class="img" src="https://www.crownchampion.com/uploads/202133399/ammonium-sulphate-steel-grade16419832772.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Ammonium Sulphate</p>
+    <ul class="features">
+      <li>🌱 Ammonium Sulphate - <strong>21% Nitrogen (N) and 24% Sulfur (S)</strong></li>
+      <li><strong>Benefits:</strong> Provides essential nitrogen for plant growth and sulfur for protein synthesis.</li>
+      <li><strong>Recommended Application:</strong> 100-150 kg/ha depending on crop type and soil needs.</li>
+      <li><strong>Fertilizer Type:</strong> Granular or powder form, highly soluble in water.</li>
+      <li><strong>Water Management:</strong> Best applied before irrigation to enhance nutrient absorption.</li>
+      <li><strong>Symptoms of Imbalance:</strong> Overuse can cause soil acidification, while underuse leads to nitrogen deficiency.</li>
+      <li><strong>Healthcare:</strong> Regular soil testing recommended, balance with lime to prevent acidity.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == 'Chilated Micronutrient' %}
+<div class="frame">
+  <img class="img" src="https://5.imimg.com/data5/SELLER/Default/2023/1/WV/VP/RB/12511653/chelated-mix-micronutrient.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Chelated Micronutrient</p>
+    <ul class="features">
+      <li>🌱 Chelated Micronutrient - <strong>Essential Trace Elements</strong> for plant health</li>
+      <li>**Chelation Benefits**: Enhances nutrient absorption, prevents deficiency, and improves crop yield.</li>
+      <li>**Recommended Mix**: Chelated forms of iron (Fe), zinc (Zn), manganese (Mn), copper (Cu), and boron (B) in balanced proportions.</li>
+      <li>**Fertilizer**: Use foliar sprays or soil applications to ensure availability of micronutrients.</li>
+      <li>**Water Management**: Chelated micronutrients dissolve well in water, ensuring efficient uptake by plants.</li>
+      <li>**Symptoms of Deficiency**: Yellowing leaves (chlorosis), stunted growth, and poor flowering indicate micronutrient deficiency.</li>
+      <li>**Healthcare**: Apply chelated fertilizers periodically, maintain soil pH for better nutrient availability.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == 'DAP' %}
+<div class="frame">
+  <img class="img" src="https://radhakrishnaagriculture.in/cdn/shop/files/dap1kg.jpg?v=1711178446">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Di-Ammonium Phosphate (DAP)</p>
+    <ul class="features">
+      <li>🌱 DAP - <strong>18% Nitrogen (N) & 46% Phosphorus (P<sub>2</sub>O<sub>5</sub>)</strong></li>
+      <li>**DAP Benefits**: Provides essential nutrients for root development, seed germination, and plant vigor.</li>
+      <li>**Recommended Application**: Use 100-150 kg per hectare for balanced crop nutrition.</li>
+      <li>**Fertilizer Usage**: Best applied before planting or during early growth stages for maximum absorption.</li>
+      <li>**Water Management**: Requires adequate moisture to dissolve and release nutrients efficiently.</li>
+      <li>**Symptoms of Imbalance**: Overuse can lead to soil acidity and hinder microbial activity.</li>
+      <li>**Healthcare**: Maintain proper soil pH (6.0-7.5) and supplement with organic matter.</li>
+    </ul>
+  </div>
+</div>
+{% elif prediction_text == 'Ferrous Sulphate' %}
+<div class="frame">
+  <img class="img" src="https://krushikendra.com/image/cache/catalog/Products_New/Ferrous_Sulphate-500x500.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Ferrous Sulphate</p>
+    <ul class="features">
+      <li>🟢 **Ferrous Sulphate** - <strong>Essential Micronutrient</strong> for plants</li>
+      <li>**Benefits**: Prevents and corrects iron deficiency (chlorosis), improving plant growth and leaf color.</li>
+      <li>**Recommended Application**: 2-5 grams per liter of water for foliar spray or 25-50 kg per hectare for soil application.</li>
+      <li>**Fertilizer Synergy**: Can be used with organic compost or nitrogen fertilizers for better absorption.</li>
+      <li>**Water Management**: Requires adequate moisture to dissolve and absorb efficiently in the soil.</li>
+      <li>**Symptoms of Deficiency**: Yellowing of young leaves, stunted growth, poor fruit development.</li>
+      <li>**Healthcare**: Avoid excessive use, as it may cause soil acidification; balance with lime if necessary.</li>
+    </ul>
+  </div>
+</div>
+
+
+{% elif prediction_text == 'Hydrated Lime' %}
+<div class="frame">
+  <img class="img" src="https://cpimg.tistatic.com/7131669/b/4/hydrated-lime.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Hydrated Lime</p>
+    <ul class="features">
+      <li>🌿 Hydrated Lime - <strong>Soil pH Regulator</strong> and Enhancer</li>
+      <li>**Benefits**: Neutralizes acidic soil, improves soil structure, and enhances nutrient availability.</li>
+      <li>**Recommended Application**: Apply 2-4 kg per 100 sq. ft. based on soil acidity levels.</li>
+      <li>**Fertilizer Combination**: Use with compost or organic matter for balanced soil conditioning.</li>
+      <li>**Water Management**: Ensure proper watering after application to integrate lime effectively.</li>
+      <li>**Symptoms of Imbalance**: Overuse can cause excessive alkalinity, leading to nutrient lockout.</li>
+      <li>**Healthcare**: Regularly test soil pH, mix thoroughly, and avoid applying near acid-loving plants.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == 'MOP' %}
+<div class="frame">
+  <img class="img" src="https://m.media-amazon.com/images/I/41UT46TWg3L.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Muriate of Potash (MOP)</p>
+    <ul class="features">
+      <li>🧪 **MOP - 60% Potassium Chloride** for plant growth</li>
+      <li>**MOP Benefits**: Enhances root development, improves drought resistance, and increases crop yield.</li>
+      <li>**Recommended Mix**: Ideal for potassium-deficient soils; best applied in balanced NPK formulations.</li>
+      <li>**Application**: Apply at the root zone or mix with irrigation water for effective absorption.</li>
+      <li>**Water Management**: MOP is water-soluble; avoid excessive application to prevent leaching.</li>
+      <li>**Symptoms of Imbalance**: Excess potassium may cause magnesium and calcium deficiencies in soil.</li>
+      <li>**Healthcare**: Use in recommended doses, mix with organic matter to reduce chloride effects.</li>
+    </ul>
+  </div>
+</div>
+
+
+{% elif prediction_text == 'Magnesium Sulphate' %}
+<div class="frame">
+  <img class="img" src="https://2.wlimg.com/product_images/bc-full/2024/5/110357/magnesium-sulphate-fertilizer-1715681121-2745968.jpeg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Magnesium Sulphate (Epsom Salt)</p>
+    <ul class="features">
+      <li>🧪 Magnesium Sulphate - <strong>Boosts Chlorophyll Production</strong> for enhanced photosynthesis.</li>
+      <li>**Benefits**: Provides essential magnesium for plant growth, improves nutrient uptake, and prevents yellowing of leaves.</li>
+      <li>**Recommended Usage**: Dissolve 1-2 tablespoons in 1 gallon of water and apply as a foliar spray every two weeks.</li>
+      <li>**Fertilizer Compatibility**: Can be mixed with organic compost and NPK fertilizers for balanced nutrition.</li>
+      <li>**Water Management**: Helps improve soil structure and nutrient absorption, reducing nutrient leaching.</li>
+      <li>**Symptoms of Deficiency**: Yellowing between leaf veins (interveinal chlorosis), poor growth, and weak stems.</li>
+      <li>**Healthcare**: Avoid excessive application to prevent soil imbalance, and use in moderation.</li>
+    </ul>
+  </div>
+</div>
+{% elif prediction_text == 'SSP' %}
+<div class="frame">
+  <img class="img" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqGSVxaWa5Mm-1x6YOFWyQMtyfEwZ8n6k6kQ&s">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Single Super Phosphate (SSP)</p>
+    <ul class="features">
+      <li>🌱 **SSP - 16% P2O5 (Phosphorus)** for soil enrichment</li>
+      <li>**SSP Benefits**: Enhances root development, improves flowering, and increases crop yield.</li>
+      <li>**Recommended Application**: Use **100-200 kg per hectare** based on soil requirements and crop type.</li>
+      <li>**Nutrient Composition**: Contains **calcium (Ca) and sulfur (S)**, essential for plant growth.</li>
+      <li>**Soil Suitability**: Best for **phosphorus-deficient soils**; improves soil fertility over time.</li>
+      <li>**Water Management**: SSP is **water-soluble**, making phosphorus readily available to plants.</li>
+      <li>**Symptoms of Deficiency**: Stunted growth, purplish leaves, and weak root systems.</li>
+      <li>**Precautions**: Avoid excessive use to prevent phosphorus buildup in soil.</li>
+    </ul>
+  </div>
+</div>
+ 
+
+{% elif prediction_text == 'Sulphur' %}
+<div class="frame">
+  <img class="img" src="https://shehrikisaan.com/wp-content/uploads/2023/05/Sulphur_90_WDG.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Sulphur</p>
+    <ul class="features">
+      <li>🟡 Sulphur - <strong>30% Sulphur</strong> in soil for optimal plant growth</li>
+      <li>**Sulphur Benefits**: Essential for protein synthesis, enzyme activation, and chlorophyll formation.</li>
+      <li>**Recommended Mix**: 30% Sulphur-rich fertilizer, 40% organic compost, and 30% garden soil for balanced nutrition.</li>
+      <li>**Fertilizer**: Use elemental sulphur, ammonium sulphate, or gypsum for maintaining soil Sulphur levels.</li>
+      <li>**Water Management**: Sulphur helps in nitrogen uptake and improves water-use efficiency in plants.</li>
+      <li>**Symptoms of Deficiency**: Yellowing of young leaves, stunted growth, and delayed flowering.</li>
+      <li>**Healthcare**: Regularly test soil, apply Sulphur-based fertilizers, and ensure proper soil pH balance.</li>
+    </ul>
+  </div>
+</div>
+
+{% elif prediction_text == 'Urea' %}
+<div class="frame">
+  <img class="img" src="https://ishtarcompany.com/wp-content/uploads/2018/12/Iran-urea-n46.jpg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>Urea</p>
+    <ul class="features">
+      <li>🌱 **Urea - 46% Nitrogen** for rapid plant growth and greenery.</li>
+      <li>**Urea Benefits**: Provides a high nitrogen content, boosts plant metabolism, and enhances chlorophyll production.</li>
+      <li>**Recommended Application**: Apply **1-2 teaspoons per plant** or **46 kg per hectare**, depending on soil fertility.</li>
+      <li>**Fertilizer Combination**: Mix with phosphorus (DAP) and potassium (MOP) for balanced plant nutrition.</li>
+      <li>**Water Management**: Requires adequate watering after application to prevent volatilization.</li>
+      <li>**Symptoms of Imbalance**: Overuse may cause leaf burn, soil acidification, and excessive vegetative growth.</li>
+      <li>**Healthcare**: Use in split doses, avoid direct contact with roots, and apply in moist soil conditions.</li>
+    </ul>
+  </div>
+</div>
+{% elif prediction_text == 'White Potash' %}
+<div class="frame">
+  <img class="img" src="https://5.imimg.com/data5/SELLER/Default/2023/5/306579701/NK/KE/PL/2389997/exsol-white-potash-0-0-50.jpeg">
+  <div class="plan plan1">
+    <h2>Fertilizer: {{prediction_text}}</h2>
+    <p>White Potash</p>
+    <ul class="features">
+      <li>⚪ **White Potash** - <strong>Potassium-Rich Fertilizer</strong> for soil health and plant growth.</li>
+      <li>**Benefits**: Enhances root development, improves drought resistance, and strengthens plant immunity.</li>
+      <li>**Recommended Mix**: Apply **50-60 kg per hectare**, mixed evenly with soil or irrigation water.</li>
+      <li>**Nutrient Content**: High in **Potassium (K2O)**, essential for fruit and flower development.</li>
+      <li>**Water Management**: Helps in efficient water absorption and prevents excessive wilting.</li>
+      <li>**Symptoms of Deficiency**: Yellowing of leaf edges, weak stems, and reduced flowering.</li>
+      <li>**Healthcare**: Avoid overuse to prevent salt buildup; combine with organic compost for balanced nutrition.</li>
+    </ul>
+  </div>
+</div>
+
+    {% endif %}
+   
+</body>
+</html>

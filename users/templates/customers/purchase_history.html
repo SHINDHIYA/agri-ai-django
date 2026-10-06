@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Purchase History</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap & Font Awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Custom Styles -->
+  <style>
+    :root {
+      --primary: #2e7d32;
+      --accent: #a5d6a7;
+      --light: #f1f8f5;
+      --dark: #1b5e20;
+      --shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    body {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8f5 100%);
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+    }
+
+    .page-title {
+      background: linear-gradient(120deg, var(--primary), var(--dark));
+      color: #fff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .page-title i {
+      font-size: 1.8rem;
+      margin-right: 12px;
+    }
+
+    .table th, .table td {
+      vertical-align: middle;
+    }
+
+    .table thead th {
+      background-color: #c8e6c9;
+      color: var(--dark);
+    }
+
+    .table-hover tbody tr:hover {
+      background-color: #e0f2f1;
+      cursor: pointer;
+    }
+
+    .product-img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .no-image {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f0f0f0;
+      color: #999;
+      border-radius: 6px;
+      font-size: 0.8rem;
+    }
+
+    .price {
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .btn-green {
+      background-color: var(--primary);
+      color: white;
+      border-radius: 25px;
+      padding: 8px 24px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .btn-green:hover {
+      background-color: #1b5e20;
+      color: white;
+      text-decoration: none;
+    }
+
+    .alert-info {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+      border-color: #c8e6c9;
+    }
+
+    @media (max-width: 768px) {
+      .page-title {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .table-responsive {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+ <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+<div class="container">
+  <div class="page-title">
+    <i class="fas fa-shopping-bag"></i>
+    <h2 class="mb-0">Hello {{ customer.username }}, here is your Purchase History</h2>
+  </div>
+
+  {% if purchases %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover bg-white">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Image</th>
+            <th>Price</th>
+            <th>Seller</th>
+            <th>Purchased At</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for purchase in purchases %}
+            <tr>
+              <td>{{ purchase.product.name }}</td>
+              <td>
+                {% if purchase.product.image %}
+                  <img src="{{ purchase.product.image.url }}" alt="{{ purchase.product.name }}" class="product-img">
+                {% else %}
+                  <div class="no-image">No image</div>
+                {% endif %}
+              </td>
+              <td><span class="price">${{ purchase.product.price }}</span></td>
+              <td>{{ purchase.product.seller.username }}</td>
+              <td>{{ purchase.purchased_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-info text-center">
+      <i class="fas fa-info-circle"></i> You have not made any purchases yet.
+    </div>
+  {% endif %}
+
+  <div class="text-center mt-4">
+    <a href="{% url 'home' %}" class="btn btn-green"><i class="fas fa-arrow-left"></i> Back to Home</a>
+  </div>
+</div>
+
+</body>
+</html>

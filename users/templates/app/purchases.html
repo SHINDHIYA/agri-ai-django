@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Product Purchases</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #e8f5e9;
+            --medium-green: #c8e6c9;
+            --dark-green: #1b5e20;
+            --accent-green: #4caf50;
+            --text-dark: #2d3436;
+            --text-light: #f5f5f5;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e0f2f1, #c8e6c9);
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text-dark);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-green), var(--dark-green));
+        }
+        
+        h2 {
+            color: var(--dark-green);
+            margin-bottom: 30px;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--dark-green));
+            border-radius: 2px;
+        }
+        
+        .purchase {
+            background: #f9fdf9;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-green);
+            transition: all 0.3s ease;
+        }
+        
+        .purchase:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 128, 0, 0.15);
+            border-left: 4px solid var(--dark-green);
+        }
+        
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+        
+        .product-img {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+            margin-right: 25px;
+            border-radius: 12px;
+            border: 3px solid var(--medium-green);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .purchase-details h5 {
+            color: var(--dark-green);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .purchase-details p {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .purchase-details p i {
+            width: 25px;
+            color: var(--accent-green);
+            font-size: 1.1rem;
+        }
+        
+        .purchase-stats {
+            background: linear-gradient(135deg, var(--light-green), var(--medium-green));
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+        
+        .stats-header {
+            color: var(--dark-green);
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 128, 0, 0.15);
+        }
+        
+        .stat-value {
+            color: var(--dark-green);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: var(--primary-green);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .home-btn {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            background: linear-gradient(to right, var(--accent-green), var(--dark-green));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(40, 167, 69, 0.5);
+            text-decoration: none;
+            color: white;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #f0fff4, #e1f5e1);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .empty-state i {
+            font-size: 5rem;
+            color: var(--accent-green);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+        
+        .empty-state h3 {
+            color: var(--dark-green);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .empty-state p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .page-item {
+            margin: 0 5px;
+        }
+        
+        .page-link {
+            color: var(--dark-green);
+            border: 1px solid var(--medium-green);
+            border-radius: 8px;
+            padding: 8px 16px;
+        }
+        
+        .page-link:hover {
+            background: var(--light-green);
+            color: var(--dark-green);
+        }
+        
+        .page-item.active .page-link {
+            background: linear-gradient(to right, var(--accent-green), var(--dark-green));
+            color: white;
+            border-color: var(--dark-green);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            
+            .flex {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-img {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 100%;
+                height: auto;
+                max-height: 200px;
+            }
+            
+            .home-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px;
+                display: inline-flex;
+                justify-content: center;
+                width: auto;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+<a href="/" class="home-btn"><i class="fas fa-home"></i> Home</a>
+
+<div class="container">
+    <h2>Purchases of Your Sold Products</h2>
+
+    {% if purchases %}
+        <div class="purchases-list">
+            {% for purchase in purchases %}
+                <div class="purchase">
+                    <div class="flex">
+                        <img src="{{ purchase.product.image.url }}" class="product-img" alt="Product image">
+                        <div class="purchase-details">
+                            <h5>{{ purchase.product.name }}</h5>
+                            <p><i class="fas fa-tag"></i> 💵 Price: ₹{{ purchase.product.price }}</p>
+                            <p><i class="fas fa-user"></i> 👤 Purchased by: <strong>{{ purchase.customer.username }}</strong></p>
+                            <p><i class="fas fa-clock"></i> ⏰ Time: {{ purchase.purchased_at|date:"F j, Y, g:i a" }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-box-open"></i>
+            <h3>No Purchases Yet</h3>
+            <p>Once someone buys one of your products, their details will appear here.</p>
+        </div>
+    {% endif %}
+
+    {% if is_paginated %}
+        <nav aria-label="Purchase navigation">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                {% endif %}
+
+                {% for num in paginator.page_range %}
+                    {% if page_obj.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                {% else %}
+                    <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</div>
+
+</body>
+</html>

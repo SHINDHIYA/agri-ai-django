@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Prediction Table</title>
+    <style>
+        body {
+            background-color: #e8f5e9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2e7d32;
+            margin-bottom: 30px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table thead {
+            background-color: #388e3c;
+            color: white;
+        }
+
+        .table th, .table td {
+            padding: 14px 16px;
+            text-align: center;
+            border-bottom: 1px solid #c8e6c9;
+        }
+
+        .table tbody tr:hover {
+            background-color: #dcedc8;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #f1f8e9;
+        }
+
+        .label-column {
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .timestamp-column {
+            color: #555;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+    <h2>Crop Prediction Results</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nitrogen</th>
+                <th>Phosphorus</th>
+                <th>Potassium</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>pH</th>
+                <th>Rainfall</th>
+                <th>Label</th>
+                <th>Date & Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in data %}
+            <tr>
+                <td>{{ record.nitrogen }}</td>
+                <td>{{ record.phosphorus }}</td>
+                <td>{{ record.potassium }}</td>
+                <td>{{ record.temperature }}</td>
+                <td>{{ record.humidity }}</td>
+                <td>{{ record.ph }}</td>
+                <td>{{ record.rainfall }}</td>
+                <td class="label-column">{{ record.label }}</td>
+                <td class="timestamp-column">{{ record.timestamp|date:"Y-m-d H:i:s" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

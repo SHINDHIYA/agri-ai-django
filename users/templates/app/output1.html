@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Prediction Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --crop-card-bg: #25ac0a;
+      --primary-color: #119b0d;
+      --secondary-color: #11c556;
+      --success-color: #00d97e;
+      --warning-color: #10b918;
+      --danger-color: #12af27;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .header {
+      background: linear-gradient(90deg, #1c3c6b 0%, #2c7be5 100%);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .crop-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+    
+    .crop-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+    
+    .crop-header {
+      background: linear-gradient(90deg, var(--primary-color) 0%, #4e9af1 100%);
+      color: white;
+      padding: 1.5rem;
+      position: relative;
+    }
+    
+    .crop-header h2 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    
+    .crop-header .scientific-name {
+      font-style: italic;
+      opacity: 0.9;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+    }
+    
+    .crop-icon {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      opacity: 0.2;
+    }
+    
+    .crop-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+      .crop-content {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .info-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .info-section h3 {
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .info-item {
+      display: flex;
+      margin-bottom: 0.7rem;
+      line-height: 1.5;
+    }
+    
+    .info-item .label {
+      font-weight: 500;
+      color: var(--secondary-color);
+      min-width: 120px;
+    }
+    
+    .info-item .value {
+      color: #2d3748;
+      flex: 1;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.1) 50%, transparent 100%);
+      margin: 1rem 0;
+    }
+    
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .tag-primary {
+      background-color: rgba(44, 123, 229, 0.1);
+      color: var(--primary-color);
+    }
+    
+    .tag-success {
+      background-color: rgba(0, 217, 126, 0.1);
+      color: var(--success-color);
+    }
+    
+    .tag-warning {
+      background-color: rgba(246, 195, 67, 0.1);
+      color: var(--warning-color);
+    }
+    
+    .tag-danger {
+      background-color: rgba(230, 55, 87, 0.1);
+      color: var(--danger-color);
+    }
+    
+    .full-details {
+      grid-column: 1 / -1;
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+    
+    .full-details h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    
+    .full-details p {
+      color: #4a5568;
+      line-height: 1.6;
+    }
+    
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      background: white;
+      color: var(--primary-color);
+      border-radius: 50px;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(44, 123, 229, 0.2);
+      transition: all 0.3s ease;
+      margin: 1rem;
+    }
+    
+    .back-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(44, 123, 229, 0.3);
+    }
+    
+    .user-greeting {
+      color: white;
+      font-weight: 500;
+      margin-right: 1rem;
+    }
+    
+    /* Specific crop colors */
+    .apple-card .crop-header { background: linear-gradient(90deg, #7cd453 0%, #e67e7e 100%); }
+    .banana-card .crop-header { background: linear-gradient(90deg, #f6c343 0%, #f9d77e 100%); }
+    .blackgram-card .crop-header { background: linear-gradient(90deg, #5d4037 0%, #8d6e63 100%); }
+    .chickpea-card .crop-header { background: linear-gradient(90deg, #f57c00 0%, #ffa726 100%); }
+    .coconut-card .crop-header { background: linear-gradient(90deg, #8d6e63 0%, #bcaaa4 100%); }
+    .coffee-card .crop-header { background: linear-gradient(90deg, #6d4c41 0%, #a1887f 100%); }
+    .cotton-card .crop-header { background: linear-gradient(90deg, #78909c 0%, #b0bec5 100%); }
+    .grapes-card .crop-header { background: linear-gradient(90deg, #8e24aa 0%, #ba68c8 100%); }
+    .jute-card .crop-header { background: linear-gradient(90deg, #8d6e63 0%, #bcaaa4 100%); }
+    .kidneybeans-card .crop-header { background: linear-gradient(90deg, #e53935 0%, #ef5350 100%); }
+    .lentil-card .crop-header { background: linear-gradient(90deg, #fb8c00 0%, #ffb74d 100%); }
+    .maize-card .crop-header { background: linear-gradient(90deg, #fbc02d 0%, #ffee58 100%); }
+    .mango-card .crop-header { background: linear-gradient(90deg, #ffa000 0%, #ffca28 100%); }
+    .mothbeans-card .crop-header { background: linear-gradient(90deg, #7b1fa2 0%, #9c27b0 100%); }
+    .mungbean-card .crop-header { background: linear-gradient(90deg, #388e3c 0%, #66bb6a 100%); }
+    .muskmelon-card .crop-header { background: linear-gradient(90deg, #43a047 0%, #66bb6a 100%); }
+    .orange-card .crop-header { background: linear-gradient(90deg, #f57c00 0%, #ffa726 100%); }
+    .papaya-card .crop-header { background: linear-gradient(90deg, #ff8f00 0%, #ffb74d 100%); }
+    .pigeonpeas-card .crop-header { background: linear-gradient(90deg, #5d4037 0%, #8d6e63 100%); }
+    .pomegranate-card .crop-header { background: linear-gradient(90deg, #e53935 0%, #ef5350 100%); }
+    .rice-card .crop-header { background: linear-gradient(90deg, #78909c 0%, #b0bec5 100%); }
+    .watermelon-card .crop-header { background: linear-gradient(90deg, #43a047 0%, #66bb6a 100%); }
+  </style>
+</head>
+<body>
+   <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+  <header class="header flex justify-between items-center p-4">
+    <div class="flex items-center">
+     
+      <h1 class="text-white text-xl font-bold ml-3">AgriSmart</h1>
+    </div>
+    <div class="flex items-center">
+      {% if user.is_authenticated %}
+      <span class="user-greeting">Welcome, {{ user.email }}</span>
+      {% endif %}
+      <a href="/" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back Home
+      </a>
+    </div>
+  </header>
+
+  <main class="p-4">
+    {% if prediction_text == 'Apple' %}
+    <div class="crop-card apple-card">
+      <div class="crop-header">
+        <h2>Apple</h2>
+        <div class="scientific-name">Malus domestica</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Temperate (cold winters, moderate summers)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in early spring</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sunlight</span>
+            <span class="tag tag-success">pH 6.0-7.0</span>
+            <span class="tag tag-warning">Prune annually</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate (1-2 inches weekly)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">10-10-10 NPK in spring</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">15-20 feet between trees</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Codling Moth</span>
+            <span class="tag tag-danger">Apple Scab</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Apple trees require well-drained soil and full sunlight for optimal growth. They need winter chilling (below 7°C) for proper fruiting. Regular pruning helps maintain tree shape and improves air circulation. Apples are susceptible to several pests and diseases, so integrated pest management is recommended. Harvest typically occurs 100-200 days after flowering depending on variety.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Banana' %}
+    <div class="crop-card banana-card">
+      <div class="crop-header">
+        <h2>Banana</h2>
+        <div class="scientific-name">Musa spp.</div>
+        <i class="crop-icon fas fa-banana"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Rich, well-drained loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Tropical (25-30°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Year-round in tropics</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.5-7.0</span>
+            <span class="tag tag-warning">High Humidity</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, keep moist</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">High potassium (3-1-6 ratio)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">8-10 feet between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Panama Disease</span>
+            <span class="tag tag-danger">Black Sigatoka</span>
+            <span class="tag tag-danger">Nematodes</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Bananas grow best in tropical climates with high humidity and temperatures between 26-30°C. They require protection from strong winds which can damage leaves. Plants typically fruit 9-12 months after planting. After fruiting, the main stem dies and is replaced by new suckers. Regular mulching helps retain soil moisture and suppress weeds.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'BlackGram' %}
+    <div class="crop-card blackgram-card">
+      <div class="crop-header">
+        <h2>Black Gram</h2>
+        <div class="scientific-name">Vigna mungo</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (25-35°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif and summer season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.5-7.5</span>
+            <span class="tag tag-warning">Drought Tolerant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate, avoid waterlogging</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20-40 kg N, 40-60 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">30 cm between rows, 10 cm between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Yellow Mosaic Virus</span>
+            <span class="tag tag-danger">Pod Borer</span>
+            <span class="tag tag-danger">Aphids</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Black gram is an important pulse crop grown mainly in India. It's a short duration crop (80-120 days) that improves soil fertility through nitrogen fixation. The crop is relatively drought resistant but sensitive to waterlogging. It's often grown as an intercrop with cereals. Proper weed management is crucial during the first 30 days.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Chickpea' %}
+    <div class="crop-card chickpea-card">
+      <div class="crop-header">
+        <h2>Chickpea</h2>
+        <div class="scientific-name">Cicer arietinum</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Cool season crop (18-25°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Rabi season (winter)</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.0</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Light, avoid waterlogging</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20-25 kg N, 40-50 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">30-45 cm between rows</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Pod Borer</span>
+            <span class="tag tag-danger">Ascochyta Blight</span>
+            <span class="tag tag-danger">Fusarium Wilt</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Chickpea is a cool season legume crop that matures in 90-120 days. It's highly valued for its protein-rich seeds. The crop is sensitive to waterlogging and heavy rainfall during flowering. Chickpeas fix atmospheric nitrogen, reducing the need for nitrogen fertilizers. There are two main types: Desi (small, colored seeds) and Kabuli (large, cream-colored seeds).</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Coconut' %}
+    <div class="crop-card coconut-card">
+      <div class="crop-header">
+        <h2>Coconut</h2>
+        <div class="scientific-name">Cocos nucifera</div>
+        <i class="crop-icon fas fa-coconut"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Sandy loam, well-drained</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Tropical (27±5°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Year-round in tropics</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.0-8.0</span>
+            <span class="tag tag-warning">High Humidity</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, 100-150L/palm/week</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">1.3kg NPK 12-12-17+2MgO/year</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">7.5-9m between palms</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Rhinoceros Beetle</span>
+            <span class="tag tag-danger">Red Palm Weevil</span>
+            <span class="tag tag-danger">Bud Rot</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Coconut palms are perennial crops that begin bearing fruits in 5-7 years and continue for 60-70 years. They require abundant sunlight (2000+ hrs/year) and evenly distributed rainfall (1500-2500mm). Palms are sensitive to waterlogging and need good drainage. Regular intercropping during early years improves soil fertility and provides additional income.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Coffee' %}
+    <div class="crop-card coffee-card">
+      <div class="crop-header">
+        <h2>Coffee</h2>
+        <div class="scientific-name">Coffea arabica/robusta</div>
+        <i class="crop-icon fas fa-coffee"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Volcanic, well-drained</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">15-24°C (Arabica), 24-30°C (Robusta)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in rainy season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Partial Shade</span>
+            <span class="tag tag-success">pH 6.0-6.5</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, 1500-2500mm/year</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">NPK 15-15-15, micronutrients</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">2-3m between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Coffee Berry Borer</span>
+            <span class="tag tag-danger">Leaf Rust</span>
+            <span class="tag tag-danger">Nematodes</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Coffee plants take 3-4 years to produce berries and remain productive for 20-30 years. Arabica grows at higher elevations (900-2000m) with milder temperatures, while Robusta thrives at lower elevations (0-900m) with warmer conditions. Pruning is essential to maintain productivity. Coffee requires a distinct dry period for flowering and uniform rainfall for berry development.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Cotton' %}
+    <div class="crop-card cotton-card">
+      <div class="crop-header">
+        <h2>Cotton</h2>
+        <div class="scientific-name">Gossypium hirsutum</div>
+        <i class="crop-icon fas fa-tshirt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Deep, well-drained loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (21-37°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.5</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">500-700mm during growth</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">60-80 kg N, 30-40 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">60-90 cm between rows</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Bollworm</span>
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Whitefly</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Cotton is a warm-season crop that matures in 150-180 days. It requires a long frost-free period of 180-200 days. The crop is sensitive to waterlogging and requires well-drained soils. Modern varieties include Bt cotton with resistance to bollworms. Cotton is often grown in rotation with cereals to break pest cycles and improve soil health.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Grapes' %}
+    <div class="crop-card grapes-card">
+      <div class="crop-header">
+        <h2>Grapes</h2>
+        <div class="scientific-name">Vitis vinifera</div>
+        <i class="crop-icon fas fa-wine-glass-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Mediterranean (15-40°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in early spring</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.0</span>
+            <span class="tag tag-warning">Prune annually</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Deep watering every 7-10 days</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">Balanced NPK in spring</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">6-10 feet between vines</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Powdery Mildew</span>
+            <span class="tag tag-danger">Downy Mildew</span>
+            <span class="tag tag-danger">Grape Berry Moth</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Grapes require a trellis or support system for optimal growth. They need winter chilling (below 7°C) for proper fruiting. Pruning is critical to control growth and improve fruit quality. Grapes are typically harvested 100-150 days after flowering depending on variety. Wine grapes require different growing conditions than table grapes.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Jute' %}
+    <div class="crop-card jute-card">
+      <div class="crop-header">
+        <h2>Jute</h2>
+        <div class="scientific-name">Corchorus olitorius/capsularis</div>
+        <i class="crop-icon fas fa-leaf"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Alluvial sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm and humid (24-37°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Pre-monsoon (March-April)</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.5</span>
+            <span class="tag tag-warning">High Rainfall</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">1500-2500mm rainfall needed</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">40-60 kg N, 20-30 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">25-30 cm between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Stem Rot</span>
+            <span class="tag tag-danger">Jute Hairy Caterpillar</span>
+            <span class="tag tag-danger">Anthracnose</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Jute is a bast fiber crop cultivated mainly for its strong natural fibers. The crop matures in 120-150 days. Two main species are cultivated: Corchorus olitorius (Tossa jute) and C. capsularis (White jute). Jute requires standing water during early growth but needs drainage before harvest. Retting (rotting) process in water is essential to extract fibers.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'KidneyBeans' %}
+    <div class="crop-card kidneybeans-card">
+      <div class="crop-header">
+        <h2>Kidney Beans</h2>
+        <div class="scientific-name">Phaseolus vulgaris</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (18-24°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Spring after last frost</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.0</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, 1 inch per week</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">Low nitrogen, high phosphorus</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">4-6 inches apart in rows</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Bean Beetle</span>
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Root Rot</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Kidney beans are warm-season annuals that mature in 90-150 days depending on variety. They fix nitrogen in soil through symbiotic bacteria. Bush varieties grow 1-2 feet tall while pole varieties can reach 6-10 feet and require support. Beans should be planted after soil has warmed to at least 16°C. Harvest when pods are dry and brittle.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Lentil' %}
+    <div class="crop-card lentil-card">
+      <div class="crop-header">
+        <h2>Lentil</h2>
+        <div class="scientific-name">Lens culinaris</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Cool season (18-24°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Rabi season (winter)</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.0</span>
+            <span class="tag tag-warning">Drought Tolerant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate, avoid waterlogging</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20 kg N, 40 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">15-30 cm between rows</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Stemphylium Blight</span>
+            <span class="tag tag-danger">Root Rot</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Lentils are cool-season legumes that mature in 80-110 days. They are highly drought resistant and can grow in marginal soils. Lentils fix atmospheric nitrogen, improving soil fertility. The crop is usually grown as a rainfed crop in winter. Lentils are often rotated with cereals to break disease cycles and improve soil health.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Maize' %}
+    <div class="crop-card maize-card">
+      <div class="crop-header">
+        <h2>Maize (Corn)</h2>
+        <div class="scientific-name">Zea mays</div>
+        <i class="crop-icon fas fa-corn"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (18-32°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif and Rabi seasons</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.8-7.0</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">500-800mm during growth</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">120-150 kg N, 60-80 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">60-75 cm between rows, 20-25 cm between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Stem Borer</span>
+            <span class="tag tag-danger">Fall Armyworm</span>
+            <span class="tag tag-danger">Maize Weevil</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Maize is a warm-season cereal crop that matures in 90-120 days. It's highly sensitive to frost and requires temperatures above 10°C for germination. Maize is a heavy feeder requiring adequate nitrogen. Modern hybrids are more productive but require proper management. Crop rotation with legumes helps maintain soil fertility and reduce pest pressure.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Mango' %}
+    <div class="crop-card mango-card">
+      <div class="crop-header">
+        <h2>Mango</h2>
+        <div class="scientific-name">Mangifera indica</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Deep, well-drained loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Tropical/subtropical (24-27°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in rainy season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.5-7.5</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular when young, drought tolerant when mature</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">NPK 6-6-6 for young trees, 8-3-9 for bearing trees</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">10-12m between trees</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Mango Hopper</span>
+            <span class="tag tag-danger">Fruit Fly</span>
+            <span class="tag tag-danger">Anthracnose</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Mango trees begin fruiting in 4-6 years and can produce for over 40 years. They require a distinct dry period (2-3 months) for flowering. Mangoes are sensitive to frost and strong winds. Regular pruning helps maintain tree size and improve air circulation. There are hundreds of varieties with different flavor profiles, sizes, and ripening times.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'MothBeans' %}
+    <div class="crop-card mothbeans-card">
+      <div class="crop-header">
+        <h2>Moth Beans</h2>
+        <div class="scientific-name">Vigna aconitifolia</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Sandy to sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Hot and dry (25-35°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.5-7.5</span>
+            <span class="tag tag-warning">Drought Resistant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Low, drought tolerant</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20 kg N, 40 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">30 cm between rows, 10 cm between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Pod Borer</span>
+            <span class="tag tag-danger">Whitefly</span>
+            <span class="tag tag-danger">Yellow Mosaic Virus</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Moth bean is a drought-resistant legume crop that matures in 75-90 days. It's commonly grown in arid and semi-arid regions. The crop improves soil fertility through nitrogen fixation. Moth bean is often grown as a cover crop or intercrop with pearl millet. The beans are highly nutritious and rich in protein.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'MungBean' %}
+    <div class="crop-card mungbean-card">
+      <div class="crop-header">
+        <h2>Mung Bean</h2>
+        <div class="scientific-name">Vigna radiata</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (25-35°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif and summer season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.2-7.2</span>
+            <span class="tag tag-warning">Drought Tolerant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate, avoid waterlogging</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20-25 kg N, 40-50 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">30 cm between rows, 10 cm between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Yellow Mosaic Virus</span>
+            <span class="tag tag-danger">Pod Borer</span>
+            <span class="tag tag-danger">Whitefly</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Mung bean is a short duration (60-90 days) pulse crop grown mainly in Asia. It's highly drought resistant and can grow in marginal soils. The crop improves soil fertility through nitrogen fixation. Mung bean is often grown as an intercrop with cereals. Sprouted mung beans are a rich source of protein and vitamins.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Musk melon' %}
+    <div class="crop-card muskmelon-card">
+      <div class="crop-header">
+        <h2>Muskmelon</h2>
+        <div class="scientific-name">Cucumis melo</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Sandy loam, well-drained</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (18-30°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Summer season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-6.8</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, reduce near harvest</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">Balanced NPK with micronutrients</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">1.5-2m between hills</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Powdery Mildew</span>
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Fruit Fly</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Muskmelons are warm-season fruits that mature in 70-100 days. They require plenty of space as vines can spread 6-8 feet. Consistent moisture is needed during fruit development, but reduce watering near harvest to improve sweetness. Muskmelons are ready to harvest when the stem slips easily from the fruit. There are many varieties with different flavors and aromas.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Orange' %}
+    <div class="crop-card orange-card">
+      <div class="crop-header">
+        <h2>Orange</h2>
+        <div class="scientific-name">Citrus × sinensis</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Subtropical (13-37°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in early rainy season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-7.5</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, deep watering</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">NPK with micronutrients (Zn, Mn, Fe)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">5-6m between trees</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Citrus Canker</span>
+            <span class="tag tag-danger">Huanglongbing (HLB)</span>
+            <span class="tag tag-danger">Aphids</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Orange trees begin bearing fruit in 3-6 years and can produce for 50+ years. They require winter chilling (not freezing) for proper fruit development. Regular pruning improves air circulation and light penetration. Oranges are typically harvested when fully colored and sweet. There are many varieties including Valencia, Navel, and Blood oranges with different characteristics.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Papaya' %}
+    <div class="crop-card papaya-card">
+      <div class="crop-header">
+        <h2>Papaya</h2>
+        <div class="scientific-name">Carica papaya</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Tropical (21-33°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Year-round in tropics</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-6.5</span>
+            <span class="tag tag-warning">Wind Protection</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, avoid waterlogging</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">Balanced NPK with micronutrients</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">2-3m between plants</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Papaya Ring Spot Virus</span>
+            <span class="tag tag-danger">Mealybug</span>
+            <span class="tag tag-danger">Fruit Fly</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Papaya plants begin fruiting in 6-12 months and produce for 3-4 years. They are fast-growing but sensitive to frost and strong winds. Papayas come in male, female, and hermaphrodite forms - hermaphrodites produce the best commercial fruit. The enzyme papain from green papaya is used as a meat tenderizer. Ripe papaya is rich in vitamins A and C.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Pigeonpeas' %}
+    <div class="crop-card pigeonpeas-card">
+      <div class="crop-header">
+        <h2>Pigeon Peas</h2>
+        <div class="scientific-name">Cajanus cajan</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained sandy loam</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (18-30°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.0-7.0</span>
+            <span class="tag tag-warning">Drought Tolerant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate, drought tolerant</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">20 kg N, 40 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">60-90 cm between rows</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Pod Borer</span>
+            <span class="tag tag-danger">Wilt Disease</span>
+            <span class="tag tag-danger">Sterility Mosaic</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Pigeon pea is a perennial legume often grown as an annual crop. It matures in 120-250 days depending on variety. The crop is highly drought resistant and can grow in poor soils. Pigeon pea improves soil fertility through nitrogen fixation. It's often grown as an intercrop with cereals. The dried peas are a staple in many tropical cuisines.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Pomegranate' %}
+    <div class="crop-card pomegranate-card">
+      <div class="crop-header">
+        <h2>Pomegranate</h2>
+        <div class="scientific-name">Punica granatum</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Well-drained loamy soil</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Subtropical (25-35°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Plant in early rainy season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.5-7.0</span>
+            <span class="tag tag-warning">Drought Tolerant</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Moderate, reduce during fruiting</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">NPK with micronutrients</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">4-5m between trees</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Fruit Borer</span>
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Bacterial Blight</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Pomegranate trees begin fruiting in 2-3 years and can produce for decades. They are highly drought tolerant once established. Pomegranates require hot summers for proper fruit development. The fruit is rich in antioxidants and vitamins. There are many varieties with different flavors (sweet to tart) and colors (pink to deep red).</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Rice' %}
+    <div class="crop-card rice-card">
+      <div class="crop-header">
+        <h2>Rice</h2>
+        <div class="scientific-name">Oryza sativa</div>
+        <i class="crop-icon fas fa-seedling"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Clay loam with good water retention</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm and humid (20-37°C)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Kharif and Rabi seasons</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 5.0-6.5</span>
+            <span class="tag tag-warning">Water Intensive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Continuous flooding (5-10cm depth)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">100-120 kg N, 40-60 kg P₂O₅/ha</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">20×20 cm for transplanted rice</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Stem Borer</span>
+            <span class="tag tag-danger">Brown Plant Hopper</span>
+            <span class="tag tag-danger">Blast Disease</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Rice is a staple food for half the world's population. It's typically grown in flooded fields (paddies) which helps control weeds. Rice varieties are classified by grain length (short, medium, long) and type (aromatic, glutinous). Modern high-yielding varieties mature in 110-130 days. Rice cultivation contributes significantly to methane emissions.</p>
+        </div>
+      </div>
+    </div>
+
+    {% elif prediction_text == 'Watermelon' %}
+    <div class="crop-card watermelon-card">
+      <div class="crop-header">
+        <h2>Watermelon</h2>
+        <div class="scientific-name">Citrullus lanatus</div>
+        <i class="crop-icon fas fa-apple-alt"></i>
+      </div>
+      <div class="crop-content">
+        <div class="info-section">
+          <h3><i class="fas fa-seedling"></i> Cultivation Details</h3>
+          <div class="info-item">
+            <span class="label">Soil Type:</span>
+            <span class="value">Sandy loam, well-drained</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Climate:</span>
+            <span class="value">Warm (21-30°C ideal)</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Season:</span>
+            <span class="value">Summer season</span>
+          </div>
+          <div class="divider"></div>
+          <div class="tags">
+            <span class="tag tag-primary">Full Sun</span>
+            <span class="tag tag-success">pH 6.0-6.8</span>
+            <span class="tag tag-warning">Frost Sensitive</span>
+          </div>
+        </div>
+        
+        <div class="info-section">
+          <h3><i class="fas fa-tint"></i> Care Instructions</h3>
+          <div class="info-item">
+            <span class="label">Watering:</span>
+            <span class="value">Regular, reduce near harvest</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Fertilizer:</span>
+            <span class="value">Balanced NPK with micronutrients</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Spacing:</span>
+            <span class="value">1.5-2m between hills</span>
+          </div>
+          <div class="divider"></div>
+          <h3><i class="fas fa-bug"></i> Common Pests</h3>
+          <div class="tags">
+            <span class="tag tag-danger">Aphids</span>
+            <span class="tag tag-danger">Fruit Fly</span>
+            <span class="tag tag-danger">Fusarium Wilt</span>
+          </div>
+        </div>
+        
+        <div class="full-details">
+          <h3><i class="fas fa-info-circle"></i> Detailed Information</h3>
+          <p>Watermelons are warm-season fruits that mature in 70-90 days. Vines can spread 6-12 feet and require plenty of space. Consistent moisture is crucial during fruit development, but reduce watering near harvest to maximize sweetness. Watermelons are ready when the underside turns yellow and the tendril near the stem dries. There are many varieties with different flesh colors (red, yellow, orange) and sizes.</p>
+        </div>
+      </div>
+    </div>
+
+    {% endif %}
+  </main>
+
+  
+</body>
+</html>

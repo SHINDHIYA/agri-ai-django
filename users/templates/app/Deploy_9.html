@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Yield</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://www.terrascope.com/hubfs/percentage-of-emissions-come-from-agriculture.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            padding-top: 50px;
+        }
+
+        /* Form Container */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.9); /* Transparent white */
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+        }
+
+        .form-container h3 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Form Elements */
+        .form-container select, .form-container input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+        }
+
+        .form-container select:focus, .form-container input[type="number"]:focus {
+            border-color: #4CAF50;
+            outline: none;
+        }
+
+        /* Button Styles */
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 30px;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+    <h2>Predict Yield</h2>
+    <div class="form-container">
+        <h3>Enter Details for Prediction</h3>
+        <form action="{% url 'Deploy_9' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="crop">Crop:</label>
+                <select id="crop" name="crop" required>
+                    <option value="">Select a crop</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div>
+                <label for="season">Season:</label>
+                <select id="season" name="season" required>
+                    <option value="">Select a season</option>
+                    <!-- Season options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div>
+                <label for="area">Area:</label>
+                <input type="number" id="area" name="area" required>
+            </div>
+            <div>
+                <label for="area_units">Area Units:</label>
+                <select id="area_units" name="area_units" required>
+                    <option value="">Select area units</option>
+                    <!-- Area Units options will be populated by JavaScript -->
+                </select>
+            </div>
+            <div>
+                <label for="production">Laying:</label>
+                <input type="number" id="production" name="production" required>
+            </div>
+            <div>
+                <label for="production_units">Production Units:</label>
+                <select id="production_units" name="production_units" required>
+                    <option value="">Select production units</option>
+                    <!-- Production Units options will be populated by JavaScript -->
+                </select>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    <script>
+        const crops = ['Arecanut', 'Banana', 'Black pepper', 'Cashewnut', 'Coconut',
+                       'Dry chillies', 'Ginger', 'Other Kharif pulses', 'other oilseeds',
+                       'Rice', 'Sugarcane', 'Sweet potato', 'Arhar/Tur', 'Bajra',
+                       'Castor seed', 'Coriander', 'Cotton(lint)', 'Gram', 'Groundnut',
+                       'Horse-gram', 'Jowar', 'Linseed', 'Maize', 'Mesta',
+                       'Moong(Green Gram)', 'Niger seed', 'Onion', 'Other Rabi pulses',
+                       'Potato', 'Ragi', 'Rapeseed &Mustard', 'Safflower', 'Sesamum',
+                       'Small millets', 'Soyabean', 'Sunflower', 'Tapioca', 'Tobacco',
+                       'Turmeric', 'Urad', 'Wheat', 'Oilseeds total', 'Jute', 'Masoor',
+                       'Peas & beans (Pulses)', 'Barley', 'Garlic', 'Khesari', 'Sannhamp',
+                       'Guar seed', 'Moth', 'Cardamom', 'Other Cereals', 'Cowpea(Lobia)',
+                       'Dry Ginger', 'Other Summer Pulses'];
+
+        const cropIndices = [0, 3, 5, 7, 9, 14, 16, 34, 55, 41, 47, 49, 1, 2, 8, 10, 11,
+                             17, 18, 20, 21, 24, 25, 27, 28, 30, 32, 35, 38, 39, 40, 42,
+                             44, 45, 46, 48, 50, 51, 52, 53, 54, 31, 22, 26, 37, 4, 15, 
+                             23, 43, 19, 29, 6, 33, 12, 13, 36, 56];
+
+        const seasons = ['Kharif', 'Whole Year', 'Rabi', 'Autumn', 'Summer', 'Winter'];
+        const seasonIndices = [1, 4, 2, 0, 3, 5, 6];
+
+        const productionUnits = ['Tonnes', 'Nuts', 'Bales'];
+        const productionUnitIndices = [2, 1, 0];
+
+        const areaUnits = ['Hectare'];
+        const areaUnitIndices = [0];
+
+        const cropSelect = document.getElementById('crop');
+        const seasonSelect = document.getElementById('season');
+        const productionUnitsSelect = document.getElementById('production_units');
+        const areaUnitsSelect = document.getElementById('area_units');
+
+        for (let i = 0; i < crops.length; i++) {
+            let option = document.createElement('option');
+            option.value = cropIndices[i];
+            option.text = crops[i];
+            cropSelect.appendChild(option);
+        }
+
+        for (let i = 0; i < seasons.length; i++) {
+            let option = document.createElement('option');
+            option.value = seasonIndices[i];
+            option.text = seasons[i];
+            seasonSelect.appendChild(option);
+        }
+
+        for (let i = 0; i < productionUnits.length; i++) {
+            let option = document.createElement('option');
+            option.value = productionUnitIndices[i];
+            option.text = productionUnits[i];
+            productionUnitsSelect.appendChild(option);
+        }
+
+        for (let i = 0; i < areaUnits.length; i++) {
+            let option = document.createElement('option');
+            option.value = areaUnitIndices[i];
+            option.text = areaUnits[i];
+            areaUnitsSelect.appendChild(option);
+        }
+    </script>
+</body>
+</html>

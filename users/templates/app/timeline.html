@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Timeline</title>
+    <!-- Importing Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Importing Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --earth-brown: #8d6e63;
+            --light-bg: #f0f9f4;
+            --card-white: #ffffff;
+            --text-dark: #2c3e50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .header i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* Grid Layout for Seasons */
+        .seasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .season-card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .season-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .season-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+        }
+
+        .season-icon {
+            font-size: 40px;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .season-card h2 {
+            color: var(--dark-green);
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .crop-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .crop-list li {
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: var(--light-bg);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .crop-list li:hover {
+            background: #e8f5e9;
+            transform: translateX(5px);
+        }
+
+        .crop-list li i {
+            color: var(--primary-green);
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .crop-list li span {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Home Button */
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 5px 20px rgba(46, 204, 113, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.6);
+        }
+
+        .btn-home:active {
+            transform: translateY(0);
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .season-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .season-card:nth-child(1) { animation-delay: 0.1s; }
+        .season-card:nth-child(2) { animation-delay: 0.2s; }
+        .season-card:nth-child(3) { animation-delay: 0.3s; }
+        .season-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 32px;
+            }
+            
+            .seasons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-seedling"></i>
+            <h1>Seasonal Crop Timeline</h1>
+            <p>Plan your harvest with our seasonal guide</p>
+        </div>
+
+        <div class="seasons-grid">
+            {% for season, crops in seasonal_crops.items %}
+                <div class="season-card">
+                    <div class="season-icon">
+                        {% if season == 'spring' or season == 'Spring' %}
+                            <i class="fas fa-cloud-sun"></i>
+                        {% elif season == 'summer' or season == 'Summer' %}
+                            <i class="fas fa-sun"></i>
+                        {% elif season == 'autumn' or season == 'Autumn' or season == 'fall' or season == 'Fall' %}
+                            <i class="fas fa-leaf"></i>
+                        {% elif season == 'winter' or season == 'Winter' %}
+                            <i class="fas fa-snowflake"></i>
+                        {% else %}
+                            <i class="fas fa-seedling"></i>
+                        {% endif %}
+                    </div>
+                    
+                    <h2>{{ season }}</h2>
+                    
+                    <ul class="crop-list">
+                        {% for crop in crops %}
+                            <li>
+                                <i class="fas fa-check-circle"></i>
+                                <span>{{ crop }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="btn-container">
+            <a href="/" class="btn-home">
+                <i class="fas fa-home"></i>
+                Go Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>

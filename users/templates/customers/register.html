@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome (optional for eye icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://images8.alphacoders.com/522/thumb-1920-522915.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .register-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px 35px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .btn-register {
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+        }
+        .btn-register:hover {
+            background-color: #218838;
+        }
+        .login-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .login-link a {
+            color: #1ba122;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .toggle-eye {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #555;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+        .password-wrapper .toggle-eye {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+<div class="register-container">
+    <h2>Customer Register</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+        {% for field in user_form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.field.widget.input_type == 'password' %}
+                    <div class="password-wrapper">
+                        {{ field }}
+                        <span class="toggle-eye" onclick="togglePassword(this)"><i class="fas fa-eye"></i></span>
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% if field.errors %}
+                    <small class="text-danger">{{ field.errors|striptags }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% for field in profile_form.visible_fields %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% if field.field.widget.input_type == 'password' %}
+                    <div class="password-wrapper">
+                        {{ field }}
+                        <span class="toggle-eye" onclick="togglePassword(this)"><i class="fas fa-eye"></i></span>
+                    </div>
+                {% else %}
+                    {{ field }}
+                {% endif %}
+                {% if field.errors %}
+                    <small class="text-danger">{{ field.errors|striptags }}</small>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" class="btn btn-register">Register</button>
+    </form>
+
+    <div class="login-link">
+        <p>Already have an account? <a href="{% url 'customer-login' %}">Login here</a></p>
+    </div>
+</div>
+
+<script>
+    function togglePassword(iconElement) {
+        const input = iconElement.previousElementSibling;
+        const icon = iconElement.querySelector("i");
+
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove("fa-eye");
+            icon.classList.add("fa-eye-slash");
+        } else {
+            input.type = "password";
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+        }
+    }
+</script>
+</body>
+</html>

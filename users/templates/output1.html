@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Classification Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mb-6">Crop Classification Information</h1>
+
+    {% if prediction_text == 'Apple' %}
+      <h2 class="text-xl font-semibold">Apple</h2>
+      <p>Calories: 52 kcal per 100g</p>
+      <p>Fertilizer: NPK 10-10-10</p>
+      <p>Popular Locations: USA, China, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained soil.</li>
+        <li>Water regularly but avoid over-watering.</li>
+        <li>Apply organic fertilizer every 3 months.</li>
+        <li>Harvest in 6-8 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'BlackGram' %}
+      <h2 class="text-xl font-semibold">BlackGram</h2>
+      <p>Calories: 343 kcal per 100g</p>
+      <p>Fertilizer: NPK 20-20-0</p>
+      <p>Popular Locations: India, Myanmar, Bangladesh</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in sandy, well-drained soil.</li>
+        <li>Water moderately during the growing season.</li>
+        <li>Apply nitrogen-rich fertilizer.</li>
+        <li>Harvest in 4-5 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'Chickpea' %}
+      <h2 class="text-xl font-semibold">Chickpea</h2>
+      <p>Calories: 164 kcal per 100g</p>
+      <p>Fertilizer: NPK 15-15-15</p>
+      <p>Popular Locations: India, Pakistan, Australia</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Grow in a well-drained soil with moderate temperature.</li>
+        <li>Water deeply but allow soil to dry between watering.</li>
+        <li>Apply fertilizer once a month.</li>
+        <li>Harvest in 4-5 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'Coconut' %}
+      <h2 class="text-xl font-semibold">Coconut</h2>
+      <p>Calories: 354 kcal per 100g</p>
+      <p>Fertilizer: NPK 8-8-8</p>
+      <p>Popular Locations: Philippines, Indonesia, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained sandy soil.</li>
+        <li>Water regularly, especially during dry spells.</li>
+        <li>Apply slow-release organic fertilizers.</li>
+        <li>Harvest after 5-7 years.</li>
+      </ul>
+
+    {% elif prediction_text == 'Coffee' %}
+      <h2 class="text-xl font-semibold">Coffee</h2>
+      <p>Calories: 2 kcal per 100g (Black Coffee)</p>
+      <p>Fertilizer: NPK 15-5-10</p>
+      <p>Popular Locations: Brazil, Vietnam, Colombia</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Grow in acidic, well-drained soil.</li>
+        <li>Water regularly to keep soil moist.</li>
+        <li>Apply balanced fertilizer every 2 months.</li>
+        <li>Harvest in 3-4 years after planting.</li>
+      </ul>
+
+    {% elif prediction_text == 'Cotton' %}
+      <h2 class="text-xl font-semibold">Cotton</h2>
+      <p>Calories: 18 kcal per 100g (Cottonseed)</p>
+      <p>Fertilizer: NPK 20-10-10</p>
+      <p>Popular Locations: USA, China, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained, fertile soil.</li>
+        <li>Water deeply but infrequently.</li>
+        <li>Apply a balanced fertilizer in the growing season.</li>
+        <li>Harvest in 5-6 months.</li>
+      </ul>
+
+    {% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crop Classification Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mb-6">Crop Classification Information</h1>
+
+    {% if prediction_text == 'Apple' %}
+      <h2 class="text-xl font-semibold">Apple</h2>
+      <p>Calories: 52 kcal per 100g</p>
+      <p>Fertilizer: NPK 10-10-10</p>
+      <p>Popular Locations: USA, China, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained soil.</li>
+        <li>Water regularly but avoid over-watering.</li>
+        <li>Apply organic fertilizer every 3 months.</li>
+        <li>Harvest in 6-8 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'BlackGram' %}
+      <h2 class="text-xl font-semibold">BlackGram</h2>
+      <p>Calories: 343 kcal per 100g</p>
+      <p>Fertilizer: NPK 20-20-0</p>
+      <p>Popular Locations: India, Myanmar, Bangladesh</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in sandy, well-drained soil.</li>
+        <li>Water moderately during the growing season.</li>
+        <li>Apply nitrogen-rich fertilizer.</li>
+        <li>Harvest in 4-5 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'Chickpea' %}
+      <h2 class="text-xl font-semibold">Chickpea</h2>
+      <p>Calories: 164 kcal per 100g</p>
+      <p>Fertilizer: NPK 15-15-15</p>
+      <p>Popular Locations: India, Pakistan, Australia</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Grow in a well-drained soil with moderate temperature.</li>
+        <li>Water deeply but allow soil to dry between watering.</li>
+        <li>Apply fertilizer once a month.</li>
+        <li>Harvest in 4-5 months.</li>
+      </ul>
+
+    {% elif prediction_text == 'Coconut' %}
+      <h2 class="text-xl font-semibold">Coconut</h2>
+      <p>Calories: 354 kcal per 100g</p>
+      <p>Fertilizer: NPK 8-8-8</p>
+      <p>Popular Locations: Philippines, Indonesia, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained sandy soil.</li>
+        <li>Water regularly, especially during dry spells.</li>
+        <li>Apply slow-release organic fertilizers.</li>
+        <li>Harvest after 5-7 years.</li>
+      </ul>
+
+    {% elif prediction_text == 'Coffee' %}
+      <h2 class="text-xl font-semibold">Coffee</h2>
+      <p>Calories: 2 kcal per 100g (Black Coffee)</p>
+      <p>Fertilizer: NPK 15-5-10</p>
+      <p>Popular Locations: Brazil, Vietnam, Colombia</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Grow in acidic, well-drained soil.</li>
+        <li>Water regularly to keep soil moist.</li>
+        <li>Apply balanced fertilizer every 2 months.</li>
+        <li>Harvest in 3-4 years after planting.</li>
+      </ul>
+
+    {% elif prediction_text == 'KidneyBeans' %}
+      <h2 class="text-xl font-semibold">Cotton</h2>
+      <p>Calories: 18 kcal per 100g (Cottonseed)</p>
+      <p>Fertilizer: NPK 20-10-10</p>
+      <p>Popular Locations: USA, China, India</p>
+      <h3 class="text-lg font-medium">Follow-Up Plan:</h3>
+      <ul>
+        <li>Plant in well-drained, fertile soil.</li>
+        <li>Water deeply but infrequently.</li>
+        <li>Apply a balanced fertilizer in the growing season.</li>
+        <li>Harvest in 5-6 months.</li>
+      </ul>
+
+    {% endif %}
+  </div>
+  </body>
+</html>

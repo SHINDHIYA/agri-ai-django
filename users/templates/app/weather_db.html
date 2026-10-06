@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fertilizer Prediction Database</title>
+  <style>
+    html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    }
+
+    body {
+    background-image: url('https://static1.backyardbossimages.com/wordpress/wp-content/uploads/2022/05/Untitled-design-7.png');
+    background-size: cover;       /* Make image cover entire screen */
+    background-repeat: no-repeat; /* Prevent tiling */
+    background-position: center;  /* Center the image */
+    font-family: 'Poppins', sans-serif;
+}
+    .container {
+      width: 90%;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+    h3 {
+      color: #ffffff;
+      font-size: 26px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+    }
+    .table-responsive {
+      overflow-x: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px;
+      text-align: center;
+      font-size: 14px;
+      border: 1px solid #ddd;
+    }
+    th {
+      background: linear-gradient(45deg, #388e3c, #66bb6a);
+      color: white;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+    td {
+      color: #333;
+    }
+    tr:nth-child(even) {
+      background: #f1f8e9;
+    }
+    tr:hover {
+      background: #c8e6c9;
+      transform: scale(1.01);
+      transition: 0.3s ease-in-out;
+    }
+    .timestamp {
+      font-size: 13px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+   <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+  <div class="container">
+    <h3>Fertilizer Prediction Records</h3>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Soil Color</th>
+            <th>Nitrogen</th>
+            <th>Phosphorus</th> 
+            <th>Potassium</th> 
+            <th>pH</th> 
+            <th>Rainfall</th> 
+            <th>Temperature</th>
+            <th>Crop</th>
+            <th>Output</th>
+            <th>Date & Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for record in data %}
+          <tr>
+            <td>{{ record.Soil_color }}</td>
+            <td>{{ record.Nitrogen }}</td>
+            <td>{{ record.Phosphorus }}</td>
+            <td>{{ record.Potassium }}</td>
+            <td>{{ record.pH }}</td>
+            <td>{{ record.Rainfall }}</td>
+            <td>{{ record.Temperature }}</td>
+            <td>{{ record.Crop }}</td>
+            <td>{{ record.actual_output }}</td>
+            <td class="timestamp">{{ record.timestamp|date:"Y-m-d H:i:s" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

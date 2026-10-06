@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Deployment</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/050/466/168/small_2x/a-drop-of-water-is-on-a-green-leaf-free-video.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        form {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 100, 0, 0.25);
+            animation: slideUp 1.2s ease-in-out;
+            backdrop-filter: blur(10px);
+        }
+
+        form label {
+            font-weight: 600;
+            color: #1b5e20;
+        }
+
+        form input[type="text"],
+        form input[type="number"],
+        form select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        form input:focus {
+            border-color: #43a047;
+            box-shadow: 0 0 8px rgba(67, 160, 71, 0.6);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2e7d32, #43a047);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #1b5e20, #2e7d32);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        @keyframes slideUp {
+            from {opacity: 0; transform: translateY(30px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            form {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+
+    <div class="container">
+        <h2>🌊 Water Quality Prediction</h2>
+        <form action="{% url 'water_prediction' %}" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="aluminium">Aluminium:</label>
+                        <input type="text" class="form-control" id="aluminium" name="aluminium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ammonia">Ammonia:</label>
+                        <input type="text" class="form-control" id="ammonia" name="ammonia" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="arsenic">Arsenic:</label>
+                        <input type="text" class="form-control" id="arsenic" name="arsenic" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="barium">Barium:</label>
+                        <input type="text" class="form-control" id="barium" name="barium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cadmium">Cadmium:</label>
+                        <input type="text" class="form-control" id="cadmium" name="cadmium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="chloramine">Chloramine:</label>
+                        <input type="text" class="form-control" id="chloramine" name="chloramine" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="chromium">Chromium:</label>
+                        <input type="text" class="form-control" id="chromium" name="chromium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="copper">Copper:</label>
+                        <input type="text" class="form-control" id="copper" name="copper" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="flouride">Flouride:</label>
+                        <input type="text" class="form-control" id="flouride" name="flouride" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bacteria">Bacteria:</label>
+                        <input type="text" class="form-control" id="bacteria" name="bacteria" required>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="viruses">Viruses:</label>
+                        <input type="text" class="form-control" id="viruses" name="viruses" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lead">Lead:</label>
+                        <input type="text" class="form-control" id="lead" name="lead" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nitrates">Nitrates:</label>
+                        <input type="text" class="form-control" id="nitrates" name="nitrates" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nitrites">Nitrites:</label>
+                        <input type="text" class="form-control" id="nitrites" name="nitrites" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mercury">Mercury:</label>
+                        <input type="text" class="form-control" id="mercury" name="mercury" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="perchlorate">Perchlorate:</label>
+                        <input type="text" class="form-control" id="perchlorate" name="perchlorate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="radium">Radium:</label>
+                        <input type="text" class="form-control" id="radium" name="radium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="selenium">Selenium:</label>
+                        <input type="text" class="form-control" id="selenium" name="selenium" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="silver">Silver:</label>
+                        <input type="text" class="form-control" id="silver" name="silver" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uranium">Uranium:</label>
+                        <input type="text" class="form-control" id="uranium" name="uranium" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit">🌊 Predict</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

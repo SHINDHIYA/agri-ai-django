@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .content-box {
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+        }
+        .text-center img {
+            border: 5px solid #fff;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 style="color: darkgoldenrod;"> Detection Result</h1>
+    <div class="text-center">
+        <img src="{{ obj.image.url }}" alt="Input Image" class="rounded-lg shadow-md" style="height: 250px; width: 250px;">
+    </div>
+    
+    {% if predict == 'bacterial_leaf_blight' %}
+    <div class="content-box">
+        <h3>Bacterial Leaf Blight</h3>
+        <p><strong>Description:</strong> A bacterial disease causing wilting, yellowing, and drying of rice leaves, leading to reduced crop yield.</p>
+        <p><strong>Symptoms:</strong> Water-soaked lesions, yellow stripes, and leaf curling.</p>
+        <p><strong>Prevention:</strong> Use resistant varieties, ensure proper spacing, and apply copper-based bactericides.</p>
+        <p><strong>Precautions:</strong> Maintain field sanitation, avoid overwatering, and remove infected plants immediately.</p>
+    </div>
+    
+    {% elif predict == 'bacterial_leaf_streak' %}
+    <div class="content-box">
+        <h3>Bacterial Leaf Streak</h3>
+        <p><strong>Description:</strong> A bacterial infection leading to brown streaks on leaves, causing significant yield reduction.</p>
+        <p><strong>Symptoms:</strong> Thin, water-soaked streaks that enlarge and turn brown.</p>
+        <p><strong>Prevention:</strong> Use certified seeds, rotate crops, and apply balanced fertilization.</p>
+        <p><strong>Precautions:</strong> Avoid excessive nitrogen application and ensure proper drainage.</p>
+    </div>
+    
+    {% elif predict == 'bacterial_panicle_blight' %}
+    <div class="content-box">
+        <h3>Bacterial Panicle Blight</h3>
+        <p><strong>Description:</strong> Affects rice panicles, resulting in poor grain filling and reduced quality.</p>
+        <p><strong>Symptoms:</strong> Browning of grains, shriveled seeds, and early drying.</p>
+        <p><strong>Prevention:</strong> Use resistant varieties, avoid late planting, and ensure adequate water supply.</p>
+        <p><strong>Precautions:</strong> Maintain soil health and avoid high nitrogen doses.</p>
+    </div>
+    
+    {% elif predict == 'blast' %}
+    <div class="content-box">
+        <h3>Rice Blast</h3>
+        <p><strong>Description:</strong> A fungal disease causing lesions on leaves, stems, and panicles.</p>
+        <p><strong>Symptoms:</strong> Diamond-shaped gray lesions, wilting, and breaking stems.</p>
+        <p><strong>Prevention:</strong> Use resistant varieties, avoid excessive nitrogen, and apply fungicides.</p>
+        <p><strong>Precautions:</strong> Remove infected plants and maintain proper spacing.</p>
+    </div>
+    
+    {% elif predict == 'brown_spot' %}
+    <div class="content-box">
+        <h3>Brown Spot</h3>
+        <p><strong>Description:</strong> Fungal disease affecting rice, causing brown lesions.</p>
+        <p><strong>Symptoms:</strong> Brown circular spots on leaves, reduced grain filling.</p>
+        <p><strong>Prevention:</strong> Maintain proper nutrition and apply potassium-rich fertilizers.</p>
+        <p><strong>Precautions:</strong> Use disease-free seeds and avoid drought stress.</p>
+    </div>
+    
+    {% elif predict == 'dead_heart' %}
+    <div class="content-box">
+        <h3>Dead Heart</h3>
+        <p><strong>Description:</strong> Caused by stem borers, leading to dead tillers.</p>
+        <p><strong>Symptoms:</strong> Yellowing, drying, and breakage of central tillers.</p>
+        <p><strong>Prevention:</strong> Use pheromone traps, biological control, and remove infested tillers.</p>
+        <p><strong>Precautions:</strong> Avoid monocropping and excessive nitrogen.</p>
+    </div>
+    
+    {% elif predict == 'downy_mildew' %}
+    <div class="content-box">
+        <h3>Downy Mildew</h3>
+        <p><strong>Description:</strong> A fungal disease leading to yellowing and downy growth.</p>
+        <p><strong>Symptoms:</strong> White or purple mold on the undersides of leaves.</p>
+        <p><strong>Prevention:</strong> Use resistant varieties and apply fungicides.</p>
+        <p><strong>Precautions:</strong> Ensure proper ventilation and reduce humidity.</p>
+    </div>
+    
+    {% elif predict == 'hispa' %}
+    <div class="content-box">
+        <h3>Hispa</h3>
+        <p><strong>Description:</strong> Insect pest that scrapes the leaf surface, reducing photosynthesis.</p>
+        <p><strong>Symptoms:</strong> Skeletonized leaves with parallel feeding marks.</p>
+        <p><strong>Prevention:</strong> Use neem-based insecticides and encourage natural predators.</p>
+        <p><strong>Precautions:</strong> Avoid overuse of pesticides.</p>
+    </div>
+    
+    {% elif predict == 'normal' %}
+    <div class="content-box">
+        <h3>Healthy Crop</h3>
+        <p>Your crop is in healthy condition!</p>
+    </div>
+    
+    {% elif predict == 'tungro' %}
+    <div class="content-box">
+        <h3>Tungro Disease</h3>
+        <p><strong>Description:</strong> A viral disease causing stunted growth.</p>
+        <p><strong>Symptoms:</strong> Yellow-orange leaves, slow growth.</p>
+        <p><strong>Prevention:</strong> Control leafhoppers and use resistant varieties.</p>
+    </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

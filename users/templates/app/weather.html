@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Model</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <!-- Icons and Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+  body {
+    background-image: url('https://images.pexels.com/photos/7944397/pexels-photo-7944397.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .header h1 {
+    font-weight: 700;
+    font-size: 45px;
+    color: white;
+    text-align: center;
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  .form-wrap {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    max-width: 900px;
+    margin: 0 auto;
+    border: 2px solid #a5d6a7;
+  }
+
+  label {
+    font-weight: 500;
+    color: #e8f5e9;
+  }
+
+  .form-control {
+    height: 45px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    font-size: 16px;
+    border: 1px solid #c8e6c9;
+  }
+
+  .form-control:focus {
+    border-color: #2e7d32;
+    box-shadow: 0px 0px 8px rgba(46, 125, 50, 0.5);
+  }
+
+  .btn-primary {
+    background-color: #2e7d32;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+  }
+
+  .btn-primary:hover {
+    background-color: #1b5e20;
+    color: #fff;
+  }
+
+  .btn-primary a {
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .btn-primary a:hover {
+    color: #e8f5e9;
+  }
+</style>
+<body>
+  <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+  <script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,ta',
+      layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+    }, 'google_translate_element');
+  }
+  </script>
+
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+  </script>
+
+  <div class="container py-5">
+    <header class="header">
+      <h1>Inputs Model Form</h1>
+    </header>
+    
+
+    <div class="form-wrap">
+      <form method="post" id="survey-form" action="{% url 'Deploy_10' %}">
+        <div class="row mt-3">
+  <div class="col-md-4 mx-auto text-center">
+    <button type="button" 
+            class="btn btn-info btn-sm" 
+            style="width: auto; padding: 4px 12px; font-size: 14px;" 
+            onclick="fetchCropFormData()">
+      Get Weather Data
+    </button>
+  </div>
+</div>
+
+
+
+
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Soil Color</label>
+              <select id="Soil_color" name="Soil_color" class="form-control" required>
+                <option disabled selected>Select soil color</option>
+                <option value="0">Black</option>
+                <option value="5">Red</option>
+                <option value="3">Medium Brown</option>
+                <option value="1">Dark Brown</option>
+                <option value="4">Red</option>
+                <option value="2">Light Brown</option>
+                <option value="6">Reddish Brown</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Nitrogen</label>
+              <input id="Nitrogen" type="number" step="any" name="Nitrogen" placeholder="Enter Nitrogen" class="form-control" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Phosphorus</label>
+              <input id="Phosphorus" type="number" step="any" name="Phosphorus" placeholder="Enter Phosphorus" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Potassium</label>
+              <input id="Potassium" type="number" step="any" name="Potassium" placeholder="Enter Potassium" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>pH</label>
+              <input id="pH" type="number" step="any" name="pH" placeholder="Enter pH" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Rainfall</label>
+              <input id="Rainfall" type="number" step="any" name="Rainfall" placeholder="Enter Rainfall" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Temperature</label>
+              <input id="Temperature" type="number" step="any" name="Temperature" placeholder="Enter Temperature" class="form-control">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Crop</label>
+              <select id="Crop" name="Crop" class="form-control" required>
+                <option disabled selected>Select Crop</option>
+                <option value="11">Sugarcane</option>
+                <option value="5">Jowar</option>
+                <option value="0">Cotton</option>
+                <option value="9">Rice</option>
+                <option value="15">Wheat</option>
+                <option value="4">Groundnut</option>
+                <option value="6">Maize</option>
+                <option value="12">Tur</option>
+                <option value="14">Urad</option>
+                <option value="8">Moong</option>
+                <option value="2">Gram</option>
+                <option value="7">Masoor</option>
+                <option value="10">Soybean</option>
+                <option value="1">Ginger</option>
+                <option value="13">Turmeric</option>
+                <option value="3">Grapes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Auto-fill Button -->
+       
+        <!-- Submit Buttons -->
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+          </div>
+          <div class="col-md-4">
+            <a href="/" class="btn btn-primary btn-block">Home</a>
+          </div>
+        </div>
+      </form>
+
+      <script>
+      function fetchCropFormData() {
+        fetch("{% url 'fetch_crop_form_data' %}")
+          .then(response => response.json())
+          .then(data => {
+        
+            document.getElementById("Nitrogen").value = data.Nitrogen;
+            document.getElementById("Phosphorus").value = data.Phosphorus;
+            document.getElementById("Potassium").value = data.Potassium;
+            document.getElementById("pH").value = data.pH;
+            document.getElementById("Rainfall").value = data.Rainfall;
+            document.getElementById("Temperature").value = data.Temperature;
+        
+          })
+          .catch(error => console.error("Error fetching form data:", error));
+      }
+      </script>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Prediction</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- Include your custom CSS -->
+    <style>
+        body {
+            background-image: url('https://www.azom.com/images/news/ImageForNews_64763_17531767186953685.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 80px;
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 36px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.8); /* semi-transparent background */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            background-color: #28a745;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.6);
+        }
+        .form-group i {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+    <div class="container">
+        <h2>Crop Prediction</h2>
+        <div class="form-container">
+               <form id="crop-form" action="{% url 'Deploy_8' %}" method="post">
+           <button type="button" 
+        class="btn btn-info btn-sm mx-auto d-block" 
+        style="width: auto; padding: 4px 12px; font-size: 14px;" 
+        onclick="fetchCropInputs()">
+    Get Soil Data
+</button>
+
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="nitrogen">Nitrogen (N)</label>
+                <input id="nitrogen" name="nitrogen" class="form-control" required placeholder="Enter Nitrogen">
+            </div>
+
+            <div class="form-group">
+                <label for="phosphorus">Phosphorus (P)</label>
+                <input id="phosphorus" name="phosphorus" class="form-control" required placeholder="Enter Phosphorus">
+            </div>
+
+            <div class="form-group">
+                <label for="potassium">Potassium (K)</label>
+                <input id="potassium" name="potassium" class="form-control" required placeholder="Enter Potassium">
+            </div>
+
+            <div class="form-group">
+                <label for="temperature">Temperature (°C)</label>
+                <input id="temperature" name="temperature" class="form-control" required placeholder="Enter Temperature">
+            </div>
+
+            <div class="form-group">
+                <label for="humidity">Humidity (%)</label>
+                <input id="humidity" name="humidity" class="form-control" required placeholder="Enter Humidity">
+            </div>
+
+            <div class="form-group">
+                <label for="ph">pH Level</label>
+                <input id="ph" name="ph" class="form-control" required placeholder="Enter pH">
+            </div>
+
+            <div class="form-group">
+                <label for="rainfall">Rainfall (mm)</label>
+                <input id="rainfall" name="rainfall" class="form-control" required placeholder="Enter Rainfall">
+            </div>
+
+            <!-- Auto-fill Button -->
+            
+            <br>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn submit-btn btn-block">Submit Prediction</button>
+
+            <!-- Prediction Output -->
+            <br>
+            <h3 class="text-center">{{ prediction_text }}</h3>
+        </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS for optional features -->
+     <script>
+        function fetchCropInputs() {
+            fetch("{% url 'fetch_crop_inputs' %}")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("nitrogen").value = data.nitrogen;
+                    document.getElementById("phosphorus").value = data.phosphorus;
+                    document.getElementById("potassium").value = data.potassium;
+                    document.getElementById("temperature").value = data.temperature;
+                    document.getElementById("humidity").value = data.humidity;
+                    document.getElementById("ph").value = data.ph;
+                    document.getElementById("rainfall").value = data.rainfall;
+                })
+                .catch(error => console.error("Error fetching crop inputs:", error));
+        }
+    </script>
+</body>
+</html>

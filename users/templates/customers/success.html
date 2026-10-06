@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase Successful</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary-green: #2e7d32;
+            --medium-green: #4caf50;
+            --light-green: #e8f5e9;
+            --dark-green: #1b5e20;
+            --accent-green: #66bb6a;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 280px;
+            background: linear-gradient(to right, var(--primary-green), var(--medium-green));
+            z-index: -1;
+            border-radius: 0 0 50% 50%/0 0 100% 100%;
+            transform: scaleX(1.5);
+        }
+
+        .success-container {
+            max-width: 700px;
+            width: 100;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.2);
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .success-header {
+            background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+
+        .success-header::after {
+            content: "";
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .success-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            color: white;
+            z-index: 3;
+            animation: scaleIcon 1s ease-in-out;
+        }
+
+        .checkmark {
+            position: relative;
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkmark::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            height: 40px;
+            width: 20px;
+            border-bottom: 5px solid var(--primary-green);
+            border-right: 5px solid var(--primary-green);
+        }
+
+        .success-header h1 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-top: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .success-header p {
+            font-size: 18px;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .success-content {
+            padding: 60px 40px 40px;
+        }
+
+        .product-info {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            align-items: center;
+            background: var(--light-green);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: slideIn 0.8s ease-out;
+        }
+
+        .product-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            flex-grow: 1;
+        }
+
+        .product-details h2 {
+            color: var(--dark-green);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-meta {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .detail-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+
+        .detail-item strong {
+            color: var(--dark-green);
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .detail-item span {
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .price {
+            color: var(--primary-green);
+            font-size: 28px;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .price::before {
+            content: "₹";
+            font-size: 0.8em;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-home {
+            background: linear-gradient(to right, var(--primary-green), var(--dark-green));
+            color: white;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+
+        .btn-track {
+            background: white;
+            color: var(--dark-green);
+            border: 2px solid var(--primary-green);
+        }
+
+        .btn-track:hover {
+            background: var(--light-green);
+            transform: translateY(-3px);
+        }
+
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--gold);
+            border-radius: 2px;
+            animation: confetti-fall 4s ease-in-out infinite;
+        }
+
+        .confetti:nth-child(2n) {
+            background: var(--primary-green);
+        }
+
+        .confetti:nth-child(3n) {
+            background: var(--accent-green);
+        }
+
+        .confetti:nth-child(4n) {
+            background: var(--silver);
+        }
+
+        .thank-you {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px dashed #c8e6c9;
+            color: #5a6268;
+            font-size: 18px;
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes scaleIcon {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+            70% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 768px) {
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-image {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .product-meta {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .success-header {
+                padding: 30px 20px;
+            }
+            
+            .success-header h1 {
+                font-size: 32px;
+            }
+            
+            .success-content {
+                padding: 50px 20px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+    <!-- Confetti Animation Elements -->
+    <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="confetti" style="left: 20%; animation-delay: 0.5s;"></div>
+    <div class="confetti" style="left: 30%; animation-delay: 1.2s;"></div>
+    <div class="confetti" style="left: 40%; animation-delay: 0.8s;"></div>
+    <div class="confetti" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="confetti" style="left: 60%; animation-delay: 1.5s;"></div>
+    <div class="confetti" style="left: 70%; animation-delay: 0.3s;"></div>
+    <div class="confetti" style="left: 80%; animation-delay: 1.8s;"></div>
+    <div class="confetti" style="left: 90%; animation-delay: 2.5s;"></div>
+
+    <div class="success-container">
+        <div class="success-header">
+            <div class="checkmark"></div>
+            <i class="fas fa-check success-icon"></i>
+            <h1>Purchase Successful!</h1>
+            <p>Thank you for your order. Your product is on the way!</p>
+        </div>
+
+        <div class="success-content">
+            <div class="product-info">
+                <div class="product-image">
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+
+                <div class="product-details">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.description|default:"Your selected product has been successfully ordered." }}</p>
+
+                    <div class="price">{{ product.price }}</div>
+
+                    <div class="product-meta">
+                       
+                        <div class="detail-item">
+                            <strong>Purchased At</strong>
+                            <span>{{ purchase_time }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Purchased By</strong>
+                            <span>{{ purchased_by.username }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <strong>Delivery</strong>
+                            <span>2-3 Business Days</span>
+                        </div>
+                         <div class="detail-item">
+                            <strong>Seller:</strong>
+                            <span>{{ product.seller.username }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="{% url 'home' %}" class="btn btn-home">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                
+            </div>
+
+            <div class="thank-you">
+                <i class="fas fa-heart" style="color: #e91e63;"></i>
+                Thank you for shopping with us! We appreciate your business.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Confetti Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const confettiContainer = document.body;
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confettiContainer.appendChild(confetti);
+            }
+
+            const productInfo = document.querySelector('.product-info');
+            setTimeout(() => {
+                productInfo.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    productInfo.style.transform = 'scale(1)';
+                }, 300);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy {{ product.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- CSS & Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #e8f5e9;
+            --medium-green: #4caf50;
+            --dark-green: #1b5e20;
+            --accent-green: #66bb6a;
+            --background-gradient: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            --card-gradient: linear-gradient(to bottom right, #ffffff, #f1f8e9);
+            --shadow: 0 12px 30px rgba(46, 125, 50, 0.15);
+        }
+
+        body {
+            background: var(--background-gradient);
+            font-family: 'Segoe UI', 'Nunito', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            margin: 0;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 280px;
+            background: linear-gradient(to right, var(--primary-green), var(--medium-green));
+            z-index: -1;
+            border-radius: 0 0 50% 50%/0 0 100% 100%;
+            transform: scaleX(1.5);
+        }
+
+        .buy-container {
+            max-width: 700px;
+            margin: 60px auto;
+            background: var(--card-gradient);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            overflow: hidden;
+        }
+
+        .buy-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(to right, var(--accent-green), var(--primary-green));
+        }
+
+        .buy-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 800;
+            color: var(--primary-green);
+            position: relative;
+            padding-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 28px;
+        }
+
+        .buy-container h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--accent-green);
+            border-radius: 4px;
+        }
+
+        .btn-purchase {
+            background: linear-gradient(to right, var(--medium-green), var(--primary-green));
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            border-radius: 10px;
+            transition: all 0.4s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-purchase:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.6);
+        }
+
+        .btn-purchase:active {
+            transform: translateY(1px);
+        }
+
+        .btn-purchase::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 20px;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(25deg);
+            transition: all 0.6s;
+        }
+
+        .btn-purchase:hover::after {
+            left: 120%;
+        }
+
+        .btn-home {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+            text-decoration: none;
+            background: var(--primary-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(46, 125, 50, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-home:hover {
+            background: var(--dark-green);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(46, 125, 50, 0.4);
+        }
+
+        .product-img {
+            max-height: 220px;
+            display: block;
+            margin: 0 auto 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(200, 230, 201, 0.8);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.1);
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            background: linear-gradient(45deg, #f1f8e9, #e8f5e9);
+            padding: 10px;
+        }
+
+        .product-img:hover {
+            transform: scale(1.03);
+        }
+
+        .seller-price-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 30px; /* space between seller and price */
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.product-seller, .product-price {
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 50px;
+    background: rgba(200, 230, 201, 0.3);
+    color: var(--primary-green);
+}
+
+/* Badge label above seller */
+.product-seller::before {
+    content: "Seller";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--dark-green);
+    color: white;
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+/* Badge label above price */
+.product-price::before {
+    content: "Only";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-green);
+    color: white;
+    font-size: 12px;
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+
+        form p {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-green);
+            font-size: 15px;
+            padding-left: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #c8e6c9;
+            border-radius: 12px;
+            background-color: rgba(241, 248, 244, 0.6);
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-green);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.3), 
+                        inset 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-icon {
+            position: absolute;
+            right: 15px;
+            top: 42px;
+            color: var(--medium-green);
+            font-size: 18px;
+        }
+
+        .secure-notice {
+            text-align: center;
+            margin-top: 25px;
+            color: #5a6268;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .secure-notice i {
+            color: var(--accent-green);
+            font-size: 18px;
+        }
+
+        .payment-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .payment-icons i {
+            font-size: 32px;
+            color: var(--dark-green);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .buy-container {
+                margin: 40px auto;
+                padding: 30px;
+            }
+            
+            .buy-container h2 {
+                font-size: 24px;
+            }
+            
+            .product-price {
+                font-size: 24px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body::before {
+                height: 220px;
+            }
+            
+            .buy-container {
+                margin: 30px 15px;
+                padding: 25px 20px;
+            }
+            
+            .btn-home {
+                top: 12px;
+                right: 12px;
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            
+            .product-img {
+                max-height: 180px;
+            }
+            
+            .product-price {
+                font-size: 22px;
+            }
+            
+            input, select, textarea {
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+     <div id="google_translate_element" style="position: fixed; top: 10px; right: 10px; z-index: 9999;"></div>
+
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    includedLanguages: 'en,ta',
+    layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+  }, 'google_translate_element');
+}
+</script>
+
+<script type="text/javascript"
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+    <div class="buy-container">
+        <a href="{% url 'home' %}" class="btn-home">
+            <i class="fas fa-home"></i> Home
+        </a>
+
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-img">
+        {% else %}
+        <img src="https://via.placeholder.com/600x220?text=No+Image" alt="No Image" class="product-img">
+        {% endif %}
+
+        <h2>Buy {{ product.name }}</h2>
+        
+        <div class="seller-price-row">
+        <div class="product-seller">{{ product.seller.username }}</div>
+        <div class="product-price">₹{{ product.price }}</div>
+        </div>
+         
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-purchase">
+                <i class="fas fa-shopping-bag"></i> Confirm Purchase
+            </button>
+
+            <div class="secure-notice">
+                <i class="fas fa-lock"></i>
+                <span>Your payment information is securely encrypted</span>
+            </div>
+
+            <div class="payment-icons">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-google-pay"></i>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const formElements = document.querySelectorAll('input, select, textarea');
+            formElements.forEach(el => {
+                el.addEventListener('focus', function () {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+                el.addEventListener('blur', function () {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+
+            const purchaseBtn = document.querySelector('.btn-purchase');
+            purchaseBtn.addEventListener('click', function () {
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
